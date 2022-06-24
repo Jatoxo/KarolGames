@@ -1,0 +1,1370 @@
+//[Info] Das Programm sollte im Schnelldurchlauf-Modus ausgeführt werden
+//[Info] Die Weltgröße MUSS Länge:15, und Breite:9 betragen
+
+//[Anleitung] 1. Drücke F5, um in die 2D Ansicht zu wechseln.
+//[Anleitung] 2. Drücke F6, um die "Festlegen" Oberfläche hervorzurufen. Wähle dort auf der linken Seite die gelbe Marke aus.
+//[Anleitung] 3. Starte das Programm im Schnelldurchlauf, klicke zwischen den gelben Marken am unteren Rand, um das "Raumschiff" zu bewegen, oder zu schießen.
+//[Anleitung] 4. Schieße alle gelben Marken ab, um das Spiel zu gewinnen!
+
+
+//[Änderungsvorschlag] Je nach Geschwindigkeit des Computers, sollten ein paar Werte angepasst werden, sonst läuft das Programm zu langsam, oder zu schnell. Die zu veränderenden Werte sind in herausgehobenen Kommentaren mit "[Änderung]" markiert. Es gillt: Je größer der Wert, desto langsamer ist es.
+
+//Programm geschrieben von Jakob H. der 8a des Helene-Lange-Gymnasiums.
+
+
+
+
+
+
+Anweisung llinksdrehen
+  LinksDrehen
+  LinksDrehen
+*Anweisung
+
+Anweisung sschritt
+  Schritt
+  Schritt
+  Schritt
+*Anweisung
+
+Anweisung sbw
+  wiederhole solange NichtIstWand
+    Schritt
+  *wiederhole
+*Anweisung
+
+Anweisung hhinlegen
+  wenn NichtIstZiegel dann
+    Hinlegen
+  *wenn
+*Anweisung
+
+Anweisung aaufheben
+  wenn IstZiegel dann
+    Aufheben
+  *wenn
+*Anweisung
+
+Anweisung markenrücken
+
+  sbw
+  LinksDrehen
+  Schritt (3)
+  LinksDrehen
+  wiederhole 11 mal
+    wiederhole solange NichtIstWand
+      wenn IstMarke dann
+        wenn IstWesten dann
+          LinksDrehen
+          MarkeLöschen
+          Schritt
+          MarkeSetzen
+          llinksdrehen
+          Schritt
+          LinksDrehen
+        sonst
+          RechtsDrehen
+          MarkeLöschen
+          Schritt
+          MarkeSetzen
+          llinksdrehen
+          Schritt
+          RechtsDrehen
+        *wenn
+      *wenn
+      Schritt
+    *wiederhole
+    wenn IstMarke dann
+      wenn IstWesten dann
+        LinksDrehen
+        MarkeLöschen
+        Schritt
+        MarkeSetzen
+        llinksdrehen
+        Schritt
+        LinksDrehen
+      sonst
+        RechtsDrehen
+        MarkeLöschen
+        Schritt
+        MarkeSetzen
+        llinksdrehen
+        Schritt
+        RechtsDrehen
+      *wenn
+    *wenn
+    wenn IstWesten dann
+      RechtsDrehen
+      Schritt
+      RechtsDrehen
+    sonst
+      LinksDrehen
+      Schritt
+      LinksDrehen
+    *wenn
+  *wiederhole
+  wiederhole solange NichtIstWand
+    wenn IstMarke dann
+      RechtsDrehen
+      MarkeLöschen
+      Schritt
+      MarkeSetzen
+      llinksdrehen
+      Schritt
+      RechtsDrehen
+    *wenn
+    Schritt
+  *wiederhole
+  wenn IstMarke dann
+    RechtsDrehen
+    MarkeLöschen
+    Schritt
+    MarkeSetzen
+    llinksdrehen
+    Schritt
+    RechtsDrehen
+  *wenn
+  llinksdrehen
+
+*Anweisung
+
+Anweisung error
+  wiederhole 4 mal
+    wiederhole solange NichtIstWand
+      wenn NichtIstMarke dann
+        MarkeSetzen
+      *wenn
+      Schritt
+    *wiederhole
+    LinksDrehen
+  *wiederhole
+  wenn NichtIstMarke dann
+    MarkeSetzen
+  *wenn
+  LinksDrehen
+  sbw
+  llinksdrehen
+  Beenden
+*Anweisung
+
+Anweisung eingabekontrolleb
+  Schnell
+  llinksdrehen  //Überprüfung von Game Over
+  sbw
+  RechtsDrehen
+  Schritt
+  Schritt
+  RechtsDrehen
+  wiederhole 7 mal
+    Schritt
+    wenn IstMarke dann
+      wiederhole solange NichtIstWand
+        wenn IstMarke dann
+          MarkeLöschen
+        *wenn
+        Schritt
+      *wiederhole
+      llinksdrehen
+      wiederhole solange NichtIstZiegel
+        Schritt
+      *wiederhole
+      Aufheben
+      LinksDrehen
+      Aufheben
+      Schritt
+      RechtsDrehen
+      Schritt
+      Aufheben
+      Schritt
+      LinksDrehen
+      Hinlegen
+      Schritt
+      LinksDrehen
+      Hinlegen
+      Schritt
+      Hinlegen
+      sbw
+      LinksDrehen  //Start von Marken löschen vor Gameover
+      wiederhole 8 mal
+        wiederhole solange NichtIstWand
+          wenn IstMarke dann
+            MarkeLöschen
+          *wenn
+          Schritt
+        *wiederhole
+        wenn IstMarke dann
+          MarkeLöschen
+        *wenn
+        wenn IstNorden dann
+          LinksDrehen
+          Schritt
+          LinksDrehen
+        sonst
+          RechtsDrehen
+          Schritt
+          RechtsDrehen
+        *wenn
+      *wiederhole
+      wiederhole solange NichtIstWand
+        wenn IstMarke dann
+          MarkeLöschen
+        *wenn
+        Schritt
+      *wiederhole
+      wenn IstMarke dann
+        MarkeLöschen
+      *wenn
+      RechtsDrehen
+      sbw
+      RechtsDrehen
+      sbw
+      llinksdrehen  //Ende von Marken löschen vor Gameover
+      wiederhole 6 mal
+        Schritt
+      *wiederhole
+      LinksDrehen
+      Schritt
+      Schritt
+      MarkeSetzen
+      sschritt
+      Schritt
+      MarkeSetzen
+      RechtsDrehen
+      Schritt
+      RechtsDrehen
+      wiederhole 3 mal
+        Schritt
+        MarkeSetzen
+      *wiederhole
+      LinksDrehen
+      Schritt
+      Schritt
+      MarkeSetzen
+      Schritt
+      MarkeSetzen
+      LinksDrehen
+      Schritt
+      Schritt
+      LinksDrehen
+      MarkeSetzen
+      Schritt
+      MarkeSetzen
+      RechtsDrehen
+      sbw
+      RechtsDrehen
+      sbw
+      llinksdrehen
+      Beenden
+    *wenn
+  *wiederhole
+  RechtsDrehen
+  Schritt
+  Schritt
+  RechtsDrehen
+  sschritt
+  Schritt
+  llinksdrehen  //Fertig mit Überprüfung von Game Over
+
+  wenn IstMarke dann  //Links
+    llinksdrehen
+    MarkeLöschen
+    sbw
+    RechtsDrehen
+    wenn NichtIstZiegel dann
+      Schritt
+      RechtsDrehen
+      wiederhole solange NichtIstZiegel
+        Schritt
+      *wiederhole
+      Schritt
+      Schritt
+      Aufheben
+      LinksDrehen
+      Aufheben
+      LinksDrehen
+      Schritt
+      Hinlegen
+      RechtsDrehen
+      Hinlegen
+      LinksDrehen
+      sbw
+      LinksDrehen
+      Schritt
+      LinksDrehen
+      sschritt
+    sonst
+      RechtsDrehen
+      sschritt
+    *wenn
+  *wenn
+  Schritt
+  wenn IstMarke dann  //Schuss
+    llinksdrehen
+    MarkeLöschen
+    sbw
+    RechtsDrehen
+    wenn IstZiegel dann
+      Schritt
+      RechtsDrehen
+      sbw
+      llinksdrehen
+    sonst
+      Schritt
+      RechtsDrehen
+    *wenn
+    wiederhole solange NichtIstZiegel
+      Schritt
+    *wiederhole
+    Schritt
+    Schritt
+    wenn IstOsten dann
+      LinksDrehen
+    sonst
+      RechtsDrehen
+    *wenn
+    Schritt
+    Schritt
+    Langsam
+    wenn NichtIstMarke dann
+      MarkeSetzen
+      Schritt
+      wiederhole solange NichtIstWand
+        LinksDrehen
+        LinksDrehen
+        Schritt
+        LinksDrehen
+        LinksDrehen
+        Warten(10)
+        {wiederhole 130 mal                           //[Änderung] Geschwindigkeit der Schüsse
+          LinksDrehen
+          LinksDrehen
+          LinksDrehen
+          LinksDrehen
+        *wiederhole}
+        MarkeLöschen
+        Schritt
+        wenn IstMarke dann
+          MarkeLöschen
+          llinksdrehen
+          sbw
+          RechtsDrehen
+          sbw
+          llinksdrehen
+          sschritt
+          Schritt
+          RechtsDrehen
+        sonst
+          MarkeSetzen
+          Schritt
+        *wenn
+      *wiederhole
+      wenn IstNorden dann
+        llinksdrehen
+        Schritt
+        llinksdrehen
+        Warten(10)
+        {wiederhole 130 mal                           //[Änderung] Geschwindigkeit der Schüsse (Sollte der selbe Wert, wie der oberige sein)
+          LinksDrehen
+          LinksDrehen
+          LinksDrehen
+          LinksDrehen
+        *wiederhole}
+        MarkeLöschen
+        Schritt
+        MarkeSetzen
+        Warten(10)
+        {wiederhole 130 mal                           //[Änderung] Geschwindigkeit der Schüsse (Sollte der selbe Wert, wie der oberige sein)
+          LinksDrehen
+          LinksDrehen
+          LinksDrehen
+          LinksDrehen
+        *wiederhole}
+        MarkeLöschen
+        llinksdrehen
+        sbw
+        RechtsDrehen
+        sbw
+        llinksdrehen
+        sschritt
+        Schritt
+      sonst
+        LinksDrehen
+      *wenn
+    sonst
+      MarkeLöschen
+      LinksDrehen
+      sbw
+      LinksDrehen
+      Schritt(3)
+      LinksDrehen
+      Schritt(4)
+    *wenn
+    Schnell
+  *wenn
+  Schritt
+  wenn IstMarke dann  //Rechts
+    MarkeLöschen
+    sbw
+    LinksDrehen
+    wenn NichtIstZiegel dann
+      Schritt
+      LinksDrehen
+      wiederhole solange NichtIstZiegel
+        Schritt
+      *wiederhole
+      Schritt
+      Schritt
+      Aufheben
+      RechtsDrehen
+      Aufheben
+      RechtsDrehen
+      Schritt
+      Hinlegen
+      LinksDrehen
+      Hinlegen
+      LinksDrehen
+      sbw
+      LinksDrehen
+      Schritt
+      LinksDrehen
+      sschritt
+    sonst
+      LinksDrehen
+      sschritt
+      Schritt
+      Schritt
+      llinksdrehen
+    *wenn
+  *wenn
+*Anweisung
+
+Anweisung eingabekontrolle                              //[Änderung] Dauer bis zur nächsten Gegnerbewegung (In der ersten Phase)
+  wiederhole 2000 mal
+    eingabekontrolleb
+  *wiederhole
+*Anweisung
+
+Anweisung eingabekontrolleLangsam                       //[Änderung] Dauer bis zur nächsten Gegnerbewegung (In der zweiten Phase)
+  wiederhole 2000 mal
+    eingabekontrolleb
+  *wiederhole
+*Anweisung
+
+Anweisung eingabekontrolleMittel                        //[Änderung] Dauer zwischen Gegnern (In der dritten Phase)
+  wiederhole 450 mal
+    eingabekontrolleb
+  *wiederhole
+*Anweisung
+
+Anweisung eingabekontrolleSchnell                       //[Änderung] Geschwindigkeit der Gegner (In der dritten Phase)
+  wiederhole 150 mal
+    eingabekontrolleb
+  *wiederhole
+*Anweisung
+
+Anweisung eingabekontrolleWenigerSchnell                //[Änderung] Geschwindigkeit des "Endbosses" (Die Drei Marken am Ende der dritten Phase)
+  wiederhole 235 mal
+    eingabekontrolleb
+  *wiederhole
+*Anweisung
+
+Anweisung delayVeryShort
+  wiederhole 15000 mal
+    wenn NichtIstMarke dann
+      LinksDrehen
+    *wenn
+  *wiederhole
+*Anweisung
+
+Anweisung delayShort
+  wiederhole 1250 mal
+    LinksDrehen
+    LinksDrehen
+    LinksDrehen
+    LinksDrehen
+  *wiederhole
+*Anweisung
+
+Anweisung delay
+  wiederhole 2300 mal
+    LinksDrehen
+    LinksDrehen
+    LinksDrehen
+    LinksDrehen
+  *wiederhole
+*Anweisung
+
+wenn IstSüden dann
+  RechtsDrehen
+  sbw
+  RechtsDrehen
+  sbw
+  llinksdrehen
+*wenn
+
+wenn IstNorden dann
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+*wenn
+
+wenn IstOsten dann
+  LinksDrehen
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+*wenn
+
+wenn IstWesten dann
+  sbw
+  RechtsDrehen
+  sbw
+  llinksdrehen
+*wenn
+
+
+wiederhole 14 mal
+  wenn IstWand dann
+    LinksDrehen
+    error
+  *wenn
+  Schritt
+*wiederhole
+wenn IstWand dann  //Bereit für Breitenkontrolle
+  LinksDrehen
+  wiederhole 8 mal
+    wenn IstWand dann
+      llinksdrehen
+      sbw
+      llinksdrehen
+      error
+    *wenn
+    Schritt
+  *wiederhole
+  wenn IstWand dann  //Bereit für Aufräumen
+    LinksDrehen
+    wiederhole 8 mal
+      wiederhole solange NichtIstWand
+        wenn IstMarke dann
+          MarkeLöschen
+        *wenn
+        Schritt
+      *wiederhole
+      wenn IstMarke dann
+        MarkeLöschen
+      *wenn
+      wenn IstNorden dann
+        LinksDrehen
+        Schritt
+        LinksDrehen
+      sonst
+        RechtsDrehen
+        Schritt
+        RechtsDrehen
+      *wenn
+    *wiederhole
+    wiederhole solange NichtIstWand
+      MarkeLöschen
+      Schritt
+    *wiederhole
+    wenn IstMarke dann
+      MarkeLöschen
+    *wenn
+    llinksdrehen
+    sbw
+    llinksdrehen
+    Schritt
+    llinksdrehen
+    aaufheben
+    Schritt
+    LinksDrehen
+    wiederhole 8 mal
+      aaufheben
+      Schritt
+    *wiederhole
+    LinksDrehen
+    aaufheben
+    Schritt
+    LinksDrehen
+    wiederhole 8 mal
+      aaufheben
+      Schritt
+    *wiederhole
+    RechtsDrehen
+    Schritt
+    RechtsDrehen
+    wiederhole 8 mal
+      aaufheben
+      Schritt
+    *wiederhole
+    RechtsDrehen
+    sbw
+    LinksDrehen
+  *wenn
+  wenn IstWand dann  //Bereit für Aufbau
+    LinksDrehen
+    Schritt
+    LinksDrehen
+    Schritt
+    Schritt
+    Hinlegen
+    Schritt
+    Hinlegen
+    Schritt
+    Hinlegen
+    RechtsDrehen
+    Hinlegen
+    llinksdrehen
+    Schritt
+    RechtsDrehen
+    Schritt
+    Schritt
+    MarkeSetzen
+    llinksdrehen
+    sschritt
+    Schritt
+    MarkeSetzen
+    llinksdrehen
+    sschritt
+    llinksdrehen
+    LinksDrehen
+    sbw
+    LinksDrehen
+    sbw
+    llinksdrehen
+    wiederhole 4 mal
+      Schritt
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    RechtsDrehen
+    sbw
+    RechtsDrehen
+    sschritt
+    Schritt
+    Schritt
+    llinksdrehen  //Aufbau fertig
+    eingabekontrolle
+    eingabekontrolle
+    markenrücken
+    wiederhole 7 mal
+      Schritt
+      MarkeSetzen
+    *wiederhole
+    Schritt
+    LinksDrehen
+    sbw
+    LinksDrehen
+    sschritt
+
+    eingabekontrolle
+
+    markenrücken
+    LinksDrehen
+    sbw
+    RechtsDrehen
+    sschritt
+    Schritt
+    Schritt
+    llinksdrehen
+
+    eingabekontrolle
+
+    markenrücken
+    Schritt
+    wiederhole 3 mal
+      MarkeSetzen
+      Schritt
+      wenn NichtIstWand dann
+        Schritt
+        Schritt
+      *wenn
+    *wiederhole
+    LinksDrehen
+    sbw
+    LinksDrehen
+    sschritt
+    Schritt
+    Schritt
+
+    eingabekontrolle
+
+    markenrücken
+    Schritt (2)
+    MarkeSetzen
+    Schritt (4)
+    MarkeSetzen
+    LinksDrehen
+    sbw
+    LinksDrehen
+    Schritt
+
+    eingabekontrolle
+
+    markenrücken
+    Schritt (4)
+    MarkeSetzen
+    LinksDrehen
+    sbw
+    RechtsDrehen
+    Schritt
+    llinksdrehen
+
+    eingabekontrolle
+
+    RechtsDrehen
+
+    wiederhole solange IstWand  //Levelbau Ende, Start von Bewegen
+      LinksDrehen
+      markenrücken
+      LinksDrehen
+      sbw
+      RechtsDrehen
+      Schritt (5)
+      llinksdrehen
+      eingabekontrolle
+      sbw
+      LinksDrehen
+      Schritt (3)
+      LinksDrehen
+      wiederhole 11 mal
+        wiederhole solange NichtIstWand
+          Schritt
+          wenn IstMarke dann
+            wenn IstWesten dann
+              sbw
+              LinksDrehen
+              sbw
+              LinksDrehen
+              Schritt (5)
+              RechtsDrehen
+            sonst
+              sbw
+              RechtsDrehen
+              sbw
+              RechtsDrehen
+              Schritt (3)
+              LinksDrehen
+            *wenn
+          *wenn
+        *wiederhole
+        wenn IstWesten dann
+          RechtsDrehen
+          Schritt
+          RechtsDrehen
+        *wenn
+        wenn IstWand dann
+          wenn IstOsten dann
+            LinksDrehen
+            Schritt
+            LinksDrehen
+          *wenn
+        *wenn
+      *wiederhole
+      wiederhole solange NichtIstWand
+        Schritt
+        wenn IstMarke dann
+          sbw
+          RechtsDrehen
+          sbw
+          RechtsDrehen
+          Schritt (3)
+          LinksDrehen
+        *wenn
+      *wiederhole
+      wenn IstOsten dann
+        RechtsDrehen
+        sbw
+        RechtsDrehen
+        Schritt (5)
+        llinksdrehen
+      *wenn
+    *wiederhole
+    LinksDrehen  //Start von Phase 2
+    sbw
+    RechtsDrehen
+    sbw
+    llinksdrehen
+    wiederhole 4 mal
+      Schritt
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    LinksDrehen
+    sbw
+    LinksDrehen
+    sschritt
+
+    delayShort
+
+    markenrücken
+    LinksDrehen
+    sbw
+    RechtsDrehen
+    Schritt (5)
+    llinksdrehen
+
+    delayShort
+
+    markenrücken
+    Schritt
+    wiederhole 3 mal
+      Schritt
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    LinksDrehen
+    sbw
+    LinksDrehen
+    Schritt
+    Schritt
+
+    delayShort
+
+    markenrücken
+    LinksDrehen
+    sbw
+    RechtsDrehen
+    Schritt (5)
+    llinksdrehen
+
+    delayShort
+
+    markenrücken
+    wiederhole 4 mal
+      Schritt
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    LinksDrehen
+    sbw
+    LinksDrehen
+    sschritt
+
+    delayShort
+
+    markenrücken
+    LinksDrehen
+    sbw
+    RechtsDrehen
+    Schritt (5)
+    llinksdrehen
+
+    delayShort
+
+    markenrücken
+    Schritt
+    wiederhole 3 mal
+      Schritt
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    LinksDrehen
+    sbw
+    LinksDrehen
+    Schritt
+    Schritt
+
+    delayShort
+
+    markenrücken
+    LinksDrehen
+    sbw
+    RechtsDrehen
+    Schritt (5)
+    llinksdrehen
+
+    delayShort
+
+    markenrücken
+    wiederhole 4 mal
+      Schritt
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    LinksDrehen
+    sbw
+    LinksDrehen
+    sschritt
+
+    delayShort
+
+    markenrücken
+    LinksDrehen
+    sbw
+    RechtsDrehen
+    Schritt (5)
+    llinksdrehen
+
+    eingabekontrolle
+
+    RechtsDrehen
+    wiederhole solange IstWand  //Levelbau Ende, Start von Bewegen 2
+      LinksDrehen
+      markenrücken
+      LinksDrehen
+      sbw
+      RechtsDrehen
+      Schritt (5)
+      llinksdrehen
+      eingabekontrolleLangsam
+      sbw
+      LinksDrehen
+      Schritt (3)
+      LinksDrehen
+      wiederhole 11 mal
+        wiederhole solange NichtIstWand
+          Schritt
+          wenn IstMarke dann
+            wenn IstWesten dann
+              sbw
+              LinksDrehen
+              sbw
+              LinksDrehen
+              Schritt (5)
+              RechtsDrehen
+            sonst
+              sbw
+              RechtsDrehen
+              sbw
+              RechtsDrehen
+              Schritt (3)
+              LinksDrehen
+            *wenn
+          *wenn
+        *wiederhole
+        wenn IstWesten dann
+          RechtsDrehen
+          Schritt
+          RechtsDrehen
+        *wenn
+        wenn IstWand dann
+          wenn IstOsten dann
+            LinksDrehen
+            Schritt
+            LinksDrehen
+          *wenn
+        *wenn
+      *wiederhole
+      wiederhole solange NichtIstWand
+        Schritt
+        wenn IstMarke dann
+          sbw
+          RechtsDrehen
+          sbw
+          RechtsDrehen
+          Schritt (3)
+          LinksDrehen
+        *wenn
+      *wiederhole
+      wenn IstOsten dann
+        RechtsDrehen
+        sbw
+        RechtsDrehen
+        Schritt (5)
+        llinksdrehen
+      *wenn
+    *wiederhole
+
+    eingabekontrolleMittel  //Start von Phase 3
+
+    LinksDrehen
+    sbw
+    LinksDrehen
+    Schritt (3)
+    LinksDrehen
+    MarkeSetzen
+    sbw
+    LinksDrehen
+    Schritt
+    wiederhole 13 mal
+      eingabekontrolleSchnell
+      markenrücken
+      LinksDrehen
+      sbw
+      RechtsDrehen
+      Schritt (5)
+      llinksdrehen
+    *wiederhole
+
+    eingabekontrolleMittel
+
+    LinksDrehen
+    sbw
+    RechtsDrehen
+    Schritt
+    RechtsDrehen
+    MarkeSetzen
+    sbw
+    RechtsDrehen
+    Schritt (3)
+    llinksdrehen
+    wiederhole 13 mal
+      eingabekontrolleSchnell
+      markenrücken
+      LinksDrehen
+      sbw
+      RechtsDrehen
+      Schritt (5)
+      llinksdrehen
+    *wiederhole
+
+    eingabekontrolleMittel
+
+    LinksDrehen
+    sbw
+    llinksdrehen
+    MarkeSetzen
+    sbw
+    RechtsDrehen
+    Schritt (2)
+    llinksdrehen
+    wiederhole 13 mal
+      eingabekontrolleSchnell
+      markenrücken
+      LinksDrehen
+      sbw
+      RechtsDrehen
+      Schritt (5)
+      llinksdrehen
+    *wiederhole
+
+    eingabekontrolleMittel
+
+    LinksDrehen
+    sbw
+    LinksDrehen
+    Schritt (4)
+    LinksDrehen
+    MarkeSetzen
+    sbw
+    LinksDrehen
+    Schritt (2)
+    wiederhole 13 mal
+      eingabekontrolleSchnell
+      markenrücken
+      LinksDrehen
+      sbw
+      RechtsDrehen
+      Schritt (5)
+      llinksdrehen
+    *wiederhole
+
+    eingabekontrolleMittel
+
+    LinksDrehen
+    sbw
+    LinksDrehen
+    Schritt
+    LinksDrehen
+    MarkeSetzen
+    sbw
+    RechtsDrehen
+    Schritt
+    llinksdrehen
+    wiederhole 13 mal
+      eingabekontrolleSchnell
+      markenrücken
+      LinksDrehen
+      sbw
+      RechtsDrehen
+      Schritt (5)
+      llinksdrehen
+    *wiederhole
+
+    eingabekontrolleMittel
+
+    LinksDrehen
+    sbw
+    LinksDrehen
+    Schritt (3)
+    MarkeSetzen
+    LinksDrehen
+    sbw
+    LinksDrehen
+    Schritt
+    wiederhole 13 mal
+      eingabekontrolleSchnell
+      markenrücken
+      LinksDrehen
+      sbw
+      RechtsDrehen
+      Schritt (5)
+      llinksdrehen
+    *wiederhole
+
+    eingabekontrolleMittel
+
+    LinksDrehen
+    sbw
+    RechtsDrehen
+    Schritt (2)
+    RechtsDrehen
+    MarkeSetzen
+    sbw
+    RechtsDrehen
+    Schritt (4)
+    llinksdrehen
+    wiederhole 13 mal
+      eingabekontrolleSchnell
+      markenrücken
+      LinksDrehen
+      sbw
+      RechtsDrehen
+      Schritt (5)
+      llinksdrehen
+    *wiederhole
+
+    eingabekontrolleMittel
+
+    LinksDrehen
+    sbw
+    LinksDrehen
+    MarkeSetzen
+    Schritt
+    MarkeSetzen
+    Schritt
+    MarkeSetzen
+    LinksDrehen
+    sbw
+    LinksDrehen
+    wiederhole 13 mal
+      eingabekontrolleWenigerSchnell
+      markenrücken
+      LinksDrehen
+      sbw
+      RechtsDrehen
+      Schritt (5)
+      llinksdrehen
+    *wiederhole
+    llinksdrehen //Gewonnen
+    Schritt
+    MarkeLöschen
+    llinksdrehen
+    Schritt (4)
+    MarkeLöschen
+    Schritt (2)
+    LinksDrehen
+    Schritt (2)
+    LinksDrehen
+    wiederhole 3 mal
+      wenn IstZiegel dann
+        LinksDrehen
+        Aufheben
+        RechtsDrehen
+        Aufheben
+        Schritt
+        Hinlegen
+        Schritt (2)
+        LinksDrehen
+        Hinlegen
+        LinksDrehen
+        Schritt (2)
+        llinksdrehen
+      sonst
+        Schritt
+      *wenn
+    *wiederhole
+    sbw
+    llinksdrehen
+    wiederhole 3 mal
+      wenn IstZiegel dann
+        RechtsDrehen
+        Aufheben
+        LinksDrehen
+        Aufheben
+        Schritt
+        Hinlegen
+        Schritt (2)
+        RechtsDrehen
+        Hinlegen
+        RechtsDrehen
+        Schritt (2)
+        llinksdrehen
+      sonst
+        Schritt
+      *wenn
+      delay
+    *wiederhole
+    RechtsDrehen
+    Schritt (2)
+    LinksDrehen
+    Schritt
+    LinksDrehen
+    wiederhole 12 mal
+      delay
+      Aufheben
+      Schritt
+      LinksDrehen
+      Aufheben
+      llinksdrehen
+      Aufheben
+      Schritt
+      LinksDrehen
+      Hinlegen
+      Schritt
+      LinksDrehen
+      Schritt
+      RechtsDrehen
+      Hinlegen
+      LinksDrehen
+      Hinlegen
+      LinksDrehen
+      Schritt
+      llinksdrehen
+    *wiederhole
+    delay
+    Aufheben
+    Schritt
+    LinksDrehen
+    Aufheben
+    llinksdrehen
+    Aufheben
+    Schritt
+    LinksDrehen
+    Hinlegen
+    Schritt
+    LinksDrehen
+    Schritt
+    Hinlegen
+    LinksDrehen
+    Schritt
+    delay
+    llinksdrehen
+    Schritt
+    LinksDrehen
+    Aufheben
+    llinksdrehen
+    Aufheben
+    RechtsDrehen
+    Schritt
+    llinksdrehen
+    Aufheben
+    Schritt
+    LinksDrehen
+    sbw
+    llinksdrehen
+    Schritt
+    wiederhole 3 mal
+      Schritt
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    RechtsDrehen
+    Schritt
+    RechtsDrehen
+    wiederhole 3 mal
+      Schritt
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    LinksDrehen
+    Schritt
+    LinksDrehen
+    wiederhole 3 mal
+      Schritt
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    RechtsDrehen
+    Schritt
+    RechtsDrehen
+    Schritt
+    wiederhole 2 mal
+      Schritt
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    LinksDrehen
+    Schritt
+    LinksDrehen
+    Schritt (2)
+    RechtsDrehen
+    wiederhole 5 mal
+      Schritt
+      MarkeSetzen
+    *wiederhole
+    LinksDrehen
+    Schritt (2)
+    RechtsDrehen
+    wiederhole 4 mal
+      Schritt
+      MarkeSetzen
+    *wiederhole
+    llinksdrehen
+    Schritt
+    LinksDrehen
+    wiederhole 2 mal
+      Schritt
+      MarkeSetzen
+    *wiederhole
+    RechtsDrehen
+    Schritt
+    LinksDrehen
+    wiederhole 2 mal
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    RechtsDrehen
+    Schritt(2)
+    llinksdrehen
+    wiederhole 4 mal
+      Schritt
+      MarkeSetzen
+    *wiederhole
+    Schritt
+    RechtsDrehen
+    sbw
+    RechtsDrehen
+    Schritt
+    llinksdrehen
+    Hinlegen
+    Schritt
+    LinksDrehen
+    wiederhole 8 mal
+      Hinlegen
+      Schritt
+    *wiederhole
+    llinksdrehen
+    MarkeSetzen
+    wiederhole immer
+      wenn NichtIstWand dann
+        MarkeLöschen
+        Schritt
+        MarkeSetzen
+      sonst
+        llinksdrehen
+      *wenn
+      delayVeryShort
+    *wiederhole
+  sonst
+    llinksdrehen
+    sbw
+    llinksdrehen
+    error
+  *wenn
+sonst
+  sbw
+  LinksDrehen
+  error
+*wenn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
