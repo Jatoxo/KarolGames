@@ -1,0 +1,507 @@
+//Breite:9, Länge: min.11
+
+//[Info]
+//Dieses Programm ist der erste Versuch, in Karol eine Steuerung
+//zu implementieren
+
+//[Anleitung]
+//2D Modus Einschalten: F5
+//Festlegen Menü öffnen und Marke auswählen: F6
+//Programm im Schnelldurchlauf starten
+//Marken um den Ziegel herum setzen zum Bewegen
+
+//Programm geschrieben von Jakob Heck
+
+
+Anweisung sbw
+  wiederhole solange NichtIstWand
+    Schritt
+  *wiederhole
+*Anweisung
+
+Anweisung llinksdrehen
+  LinksDrehen
+  LinksDrehen
+*Anweisung
+
+Anweisung sschritt
+  Schritt
+  Schritt
+*Anweisung
+
+
+
+
+wenn IstSüden dann
+  RechtsDrehen
+  sbw
+  RechtsDrehen
+  sbw
+  llinksdrehen
+*wenn
+wenn IstNorden dann
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+*wenn
+wenn IstOsten dann
+  LinksDrehen
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+*wenn
+wenn IstWesten dann
+  sbw
+  RechtsDrehen
+  sbw
+  llinksdrehen
+*wenn
+
+
+wiederhole 10 mal  //Start von Längenkontrolle
+  wenn IstWand dann
+    LinksDrehen
+    wiederhole 3 mal
+      wiederhole solange NichtIstWand
+        wenn NichtIstMarke dann
+          MarkeSetzen
+        *wenn
+        Schritt
+      *wiederhole
+      LinksDrehen
+    *wiederhole
+    wiederhole solange NichtIstWand
+      wenn NichtIstMarke dann
+        MarkeSetzen
+      *wenn
+      Schritt
+    *wiederhole
+    llinksdrehen
+    sbw
+    llinksdrehen
+    wenn NichtIstMarke dann
+      MarkeSetzen
+    *wenn
+    Beenden
+  *wenn
+  Schritt
+*wiederhole
+sbw
+wenn IstWand dann  //Start von Breitenkontrolle
+  LinksDrehen
+  wiederhole 8 mal
+    wenn IstWand dann
+      LinksDrehen
+      wiederhole 4 mal
+        wiederhole solange NichtIstWand
+          wenn NichtIstMarke dann
+            MarkeSetzen
+          *wenn
+          Schritt
+        *wiederhole
+        LinksDrehen
+      *wiederhole
+      sbw
+      LinksDrehen
+      sbw
+      LinksDrehen
+      Beenden
+    *wenn
+    Schritt
+  *wiederhole
+  wenn IstWand dann  //Start von Markenlöschen
+    LinksDrehen
+    wiederhole 8 mal
+      wiederhole solange NichtIstWand
+        wenn IstMarke dann
+          MarkeLöschen
+        *wenn
+        Schritt
+      *wiederhole
+      wenn IstMarke dann
+        MarkeLöschen
+      *wenn
+      wenn IstNorden dann
+        LinksDrehen
+        Schritt
+        LinksDrehen
+      sonst
+        RechtsDrehen
+        Schritt
+        RechtsDrehen
+      *wenn
+    *wiederhole
+    wiederhole solange NichtIstWand
+      wenn IstMarke dann
+        MarkeLöschen
+      *wenn
+      Schritt
+    *wiederhole
+    wenn IstMarke dann
+      MarkeLöschen
+    *wenn
+    llinksdrehen
+    sbw
+    LinksDrehen  //Fertig mit Markenlöschen
+    sschritt  //Start von Aufbau
+    sschritt
+    LinksDrehen
+    wenn NichtIstZiegel dann
+      Hinlegen
+    *wenn
+    wiederhole 8 mal
+      Schritt
+    *wiederhole
+    MarkeSetzen
+    llinksdrehen
+    sbw
+    llinksdrehen
+    wiederhole immer  //Start von Hauptprogramm
+      wenn IstMarke dann  //UNTEN
+        Aufheben
+        MarkeLöschen
+        LinksDrehen
+        sbw
+        RechtsDrehen
+        wenn IstMarke dann
+          RechtsDrehen
+          sschritt
+          sschritt
+          LinksDrehen
+          Hinlegen
+        *wenn
+        wiederhole solange NichtIstZiegel
+          wenn NichtIstWand dann
+            Schritt
+          sonst
+            wenn IstNorden dann
+              RechtsDrehen
+              wenn IstWand dann
+                RechtsDrehen
+                wiederhole 4 mal
+                  wiederhole solange NichtIstWand
+                    MarkeSetzen
+                    Schritt
+                  *wiederhole
+                  RechtsDrehen
+                *wiederhole
+                RechtsDrehen
+                sbw
+                LinksDrehen
+                Beenden
+              *wenn
+              Schritt
+              RechtsDrehen
+            sonst
+              LinksDrehen
+              Schritt
+              LinksDrehen
+            *wenn
+          *wenn
+          wenn IstMarke dann
+            wenn IstNorden dann
+              llinksdrehen
+              wenn NichtIstWand dann
+                MarkeLöschen
+                Schritt
+                MarkeSetzen
+              *wenn
+            sonst
+              wenn NichtIstWand dann
+                MarkeLöschen
+                Schritt
+                MarkeSetzen
+              *wenn
+            *wenn
+            sbw
+            RechtsDrehen
+            sbw
+            llinksdrehen
+            sschritt
+            sschritt
+            LinksDrehen
+            Hinlegen
+          *wenn
+        *wiederhole
+      *wenn
+      sschritt
+      wenn IstMarke dann  //Oben
+        llinksdrehen
+        Aufheben
+        MarkeLöschen
+        sbw
+        RechtsDrehen
+        sbw
+        RechtsDrehen
+        wenn IstMarke dann
+          MarkeLöschen
+          Schritt
+          MarkeSetzen
+          llinksdrehen
+          Schritt
+          LinksDrehen
+          sschritt
+          sschritt
+          LinksDrehen
+          Hinlegen
+        *wenn
+        wiederhole solange NichtIstZiegel
+          wenn NichtIstWand dann
+            Schritt
+          sonst
+            wenn IstNorden dann
+              RechtsDrehen
+              wenn IstWand dann
+                RechtsDrehen
+                wiederhole 4 mal
+                  wiederhole solange NichtIstWand
+                    MarkeSetzen
+                    Schritt
+                  *wiederhole
+                  RechtsDrehen
+                *wiederhole
+                RechtsDrehen
+                sbw
+                LinksDrehen
+                Beenden
+              *wenn
+              Schritt
+              RechtsDrehen
+            sonst
+              LinksDrehen
+              Schritt
+              LinksDrehen
+            *wenn
+          *wenn
+          wenn IstMarke dann
+            wenn IstNorden dann
+              wenn NichtIstWand dann
+                MarkeLöschen
+                Schritt
+                MarkeSetzen
+              *wenn
+            sonst
+              llinksdrehen
+              wenn NichtIstWand dann
+                MarkeLöschen
+                Schritt
+                MarkeSetzen
+              *wenn
+            *wenn
+            LinksDrehen
+            sbw
+            LinksDrehen
+            sbw
+            LinksDrehen
+            sschritt
+            sschritt
+            LinksDrehen
+            Hinlegen
+          *wenn
+        *wiederhole
+        sschritt
+      *wenn
+      llinksdrehen
+      Schritt
+      RechtsDrehen
+      Schritt
+      llinksdrehen
+      wenn IstMarke dann  //LINKS
+        Aufheben
+        MarkeLöschen
+        RechtsDrehen
+        Schritt
+        RechtsDrehen
+        sbw
+        RechtsDrehen
+        wenn IstMarke dann
+          RechtsDrehen
+          sschritt
+          Schritt
+          LinksDrehen
+          Schritt
+          RechtsDrehen
+          Hinlegen
+        *wenn
+        wiederhole solange NichtIstZiegel
+          wenn NichtIstWand dann
+            Schritt
+          sonst
+            wenn IstNorden dann
+              RechtsDrehen
+              wenn IstWand dann
+                RechtsDrehen
+                wiederhole 4 mal
+                  wiederhole solange NichtIstWand
+                    MarkeSetzen
+                    Schritt
+                  *wiederhole
+                  RechtsDrehen
+                *wiederhole
+                RechtsDrehen
+                sbw
+                LinksDrehen
+                Beenden
+              *wenn
+              Schritt
+              RechtsDrehen
+            sonst
+              LinksDrehen
+              Schritt
+              LinksDrehen
+            *wenn
+          *wenn
+          wenn IstMarke dann
+            wenn IstNorden dann
+              LinksDrehen
+              wenn NichtIstWand dann
+                MarkeLöschen
+                Schritt
+                MarkeSetzen
+              *wenn
+            sonst
+              RechtsDrehen
+              wenn NichtIstWand dann
+                MarkeLöschen
+                Schritt
+                MarkeSetzen
+              *wenn
+            *wenn
+            sbw
+            LinksDrehen
+            sbw
+            LinksDrehen
+            sschritt
+            Schritt
+            LinksDrehen
+            Schritt
+            RechtsDrehen
+            Hinlegen
+          *wenn
+        *wiederhole
+      *wenn
+      sschritt
+      llinksdrehen
+      wenn IstMarke dann  //RECHTS
+        Aufheben
+        MarkeLöschen
+        LinksDrehen
+        Schritt
+        RechtsDrehen
+        sbw
+        RechtsDrehen
+        wenn IstMarke dann
+          RechtsDrehen
+          MarkeLöschen
+          Schritt
+          MarkeSetzen
+          sschritt
+          sschritt
+          linksdrehen
+          schritt
+          linksdrehen
+          hinlegen
+        *wenn
+        wiederhole solange NichtIstZiegel
+          wenn NichtIstWand dann
+            Schritt
+          sonst
+            wenn IstNorden dann
+              RechtsDrehen
+              wenn IstWand dann
+                RechtsDrehen
+                wiederhole 4 mal
+                  wiederhole solange NichtIstWand
+                    MarkeSetzen
+                    Schritt
+                  *wiederhole
+                  RechtsDrehen
+                *wiederhole
+                RechtsDrehen
+                sbw
+                LinksDrehen
+                Beenden
+              *wenn
+              Schritt
+              RechtsDrehen
+            sonst
+              LinksDrehen
+              Schritt
+              LinksDrehen
+            *wenn
+          *wenn
+          wenn IstMarke dann
+            wenn IstNorden dann
+              RechtsDrehen
+              wenn NichtIstWand dann
+                MarkeLöschen
+                Schritt
+                MarkeSetzen
+              *wenn
+            sonst
+              LinksDrehen
+              wenn NichtIstWand dann
+                MarkeLöschen
+                Schritt
+                MarkeSetzen
+              *wenn
+            *wenn
+            RechtsDrehen
+            sbw
+            RechtsDrehen
+            sbw
+            llinksdrehen
+            sschritt
+            sschritt
+            Schritt
+            LinksDrehen
+            Schritt
+            LinksDrehen
+            Hinlegen
+          *wenn
+        *wiederhole
+      *wenn
+      Schritt
+      LinksDrehen
+      Schritt
+      llinksdrehen
+
+
+
+    *wiederhole
+  *wenn
+  sbw
+  LinksDrehen
+  wiederhole 4 mal
+    wiederhole solange NichtIstWand
+      MarkeSetzen
+      Schritt
+    *wiederhole
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  Beenden
+*wenn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
