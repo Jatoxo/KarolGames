@@ -1,0 +1,499 @@
+//Einstellungen -> Karol -> Anzahl der Ziegel, die Karol springen kann: 10
+//Welt Groeße: 22x35x10
+//Programm von Jakob Heck 9a, 2019
+
+
+//------ Ziegel index ------
+//4  = straight
+//4  = straight inv
+
+//- Slight -
+
+//5  = slight angle up (1)
+//5m = slight angle up inv (1)
+
+//6  = slight angle up (2)
+//6m = slight angle up inv (2)
+
+//7  = slight angle down (1)
+//7m = slight angle down inv (1)
+
+//8  = slight angle up (2)
+//8m = slight angle up inv (2)
+
+//- Angle -
+
+//9  = angle up
+//9m = angle up inv
+
+//10  = angle down
+//10m = angle down inv
+//------------------------
+
+
+
+Anweisung umdrehen
+  LinksDrehen
+  LinksDrehen
+*Anweisung
+
+
+Anweisung sbw
+  wiederhole solange nicht IstWand
+    Schritt
+  *wiederhole
+*Anweisung
+
+
+Anweisung gameover
+  //add
+  Ton
+  wiederhole x mal
+    LinksDrehen
+  *wiederhole
+  Beenden
+*Anweisung
+
+
+Anweisung moveUp
+  wenn IstZiegel dann
+    Aufheben
+    Schritt
+    MarkeLöschen
+    wiederhole x mal
+      RechtsDrehen
+    *wiederhole
+  sonst
+    Schritt
+    wiederhole x mal
+      RechtsDrehen
+    *wiederhole
+    wiederhole solange nicht IstZiegel
+      Schritt
+    *wiederhole
+    Schritt(5)
+    wenn IstWand dann
+      umdrehen
+    sonst
+      umdrehen
+      Schritt(5)
+      umdrehen
+      Aufheben
+      Schritt
+      MarkeLöschen
+    *wenn
+  *wenn
+  wenn nicht IstSüden dann
+    wiederhole 2 mal
+      Aufheben
+      Schritt
+    *wiederhole
+    wiederhole 2 mal
+      Hinlegen
+      Schritt
+    *wiederhole
+    Hinlegen
+    Schritt
+    MarkeSetzen
+    umdrehen
+  *wenn
+  sbw
+  wiederhole x mal
+    LinksDrehen
+  *wiederhole
+  Schritt(15)
+  wiederhole x mal
+    RechtsDrehen
+  *wiederhole
+  Schritt
+*Anweisung
+
+
+Anweisung moveDown
+  wenn nicht IstZiegel dann
+    Schritt
+    wiederhole x mal
+      RechtsDrehen
+    *wiederhole
+    wiederhole solange nicht IstZiegel
+      Schritt
+    *wiederhole
+    Schritt(5)
+    MarkeLöschen
+    wenn IstWand dann
+      umdrehen
+      Schritt
+      umdrehen
+      Aufheben
+      Schritt
+      umdrehen
+    sonst
+      Schritt
+      umdrehen
+      Aufheben
+      Schritt
+    *wenn
+    wiederhole 2 mal
+      Aufheben
+      Schritt
+    *wiederhole
+    wiederhole 2 mal
+      Hinlegen
+      Schritt
+    *wiederhole
+    Hinlegen
+    Schritt
+    MarkeSetzen
+    sbw
+    wiederhole x mal
+      LinksDrehen
+    *wiederhole
+    Schritt
+  sonst
+    umdrehen
+  *wenn
+  Schritt(14)
+  wiederhole x mal
+    RechtsDrehen
+  *wiederhole
+  Schritt
+*Anweisung
+
+Bedingung isBall
+  falsch
+  wenn IstZiegel dann
+    wahr
+    wenn IstZiegel(4) dann
+      Schritt
+      wenn IstWand dann
+        falsch
+        wenn IstOsten dann
+          LinksDrehen
+          Schritt
+          LinksDrehen
+        sonst
+          wenn IstWesten dann
+            RechtsDrehen
+            Schritt
+            RechtsDrehen
+          *wenn
+        *wenn
+      sonst
+        LinksDrehen
+        LinksDrehen
+        schritt
+        linksdrehen
+        linksdrehen
+      *wenn
+
+    sonst
+      wenn IstZiegel(2) dann
+        falsch
+      sonst
+        wenn IstZiegel(3) dann
+          falsch
+        sonst
+          wenn IstZiegel(1) dann
+            falsch
+          *wenn
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+*Bedingung
+
+Anweisung findBall
+  umdrehen
+  Schritt
+  LinksDrehen
+  Schritt(17)
+  umdrehen
+
+  wiederhole solange nicht isBall
+
+    Schritt
+  *wiederhole
+
+
+*Anweisung
+
+
+
+
+Anweisung moveBall
+  wenn IstZiegel(4) dann
+
+    Aufheben(4)
+    Schritt
+    wiederhole solange nicht IstOsten
+      LinksDrehen
+    *wiederhole
+    wenn IstMarke dann
+      umdrehen
+    *wenn
+    wenn IstZiegel dann
+      wenn IstZiegel(4) dann
+        wenn IstMarke dann
+          gameover(1)
+        sonst
+          gameover(2)
+        *wenn
+      sonst
+
+        //handle collision with player
+        wenn IstZiegel(3) dann //Hit 3
+          umdrehen
+          wenn IstMarke dann
+            MarkeLöschen
+            Hinlegen(4)
+          sonst
+            Hinlegen(4)
+            Schritt
+            MarkeSetzen
+          *wenn
+        sonst
+          wenn IstZiegel(2) dann //Hit 2
+            //umdrehen
+            wenn IstMarke dann
+              MarkeLöschen
+              Schritt
+              RechtsDrehen
+              wenn IstZiegel(1) dann
+                RechtsDrehen
+                Schritt
+                Hinlegen(6)
+              sonst
+                RechtsDrehen
+                Schritt
+                Hinlegen(7)
+              *wenn
+            sonst
+              Schritt
+              LinksDrehen
+              wenn IstZiegel(1) dann
+                LinksDrehen
+                Schritt
+                Hinlegen(6)
+                Schritt
+                MarkeSetzen
+              sonst
+                LinksDrehen
+                Schritt
+                Hinlegen(7)
+                Schritt
+                MarkeSetzen
+              *wenn
+            *wenn
+          sonst
+            wenn IstZiegel(1) dann //Hit 1
+              wenn IstMarke dann
+                MarkeLöschen
+                Schritt
+                LinksDrehen
+                wenn IstZiegel(2) dann
+                  LinksDrehen
+                  Schritt(2)
+                  LinksDrehen
+                  Hinlegen(9)
+                sonst
+                  LinksDrehen
+                  Schritt(2)
+                  RechtsDrehen
+                  Hinlegen(10)
+                *wenn
+              sonst
+                Schritt
+                RechtsDrehen
+                wenn IstZiegel(2) dann
+                  RechtsDrehen
+                  Schritt(2)
+                  RechtsDrehen
+                  Hinlegen(10)
+                  Schritt
+                  MarkeSetzen
+                sonst
+                  RechtsDrehen
+                  Schritt(2)
+                  LinksDrehen
+                  Hinlegen(9)
+                  Schritt
+                  MarkeSetzen
+                *wenn
+              *wenn
+            *wenn //End Hit 1
+          *wenn //End Hit 2
+        *wenn  //End Hit 3
+
+
+      *wenn
+    sonst
+      Hinlegen(4)
+      wenn IstMarke dann
+        MarkeLöschen
+        Schritt
+        MarkeSetzen
+      *wenn
+    *wenn
+
+
+  sonst
+    wenn IstZiegel(5) dann
+
+      wiederhole 5 mal
+        Aufheben(5)
+      *wiederhole
+      Schritt
+      wiederhole solange nicht IstOsten
+        LinksDrehen
+      *wiederhole
+      wenn IstMarke dann
+        umdrehen
+      *wenn
+      wenn IstZiegel dann
+        wenn IstZiegel(4) dann
+          wenn IstMarke dann
+            gameover(1)
+          sonst
+            gameover(2)
+          *wenn
+        sonst
+
+          //handle collision with player
+
+
+        *wenn
+      sonst
+        Hinlegen(6)
+        wenn IstMarke dann
+          MarkeLöschen
+          Schritt
+          MarkeSetzen
+        *wenn
+      *wenn
+
+
+    sonst
+
+
+      wenn IstZiegel(6) dann
+
+        //add
+
+
+      sonst
+        wenn IstZiegel(7) dann
+          //add 7,8,.9
+
+
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+
+
+
+
+
+  wiederhole solange nicht IstWesten
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  Schritt(17)
+  RechtsDrehen
+  Schritt
+*Anweisung
+
+
+Anweisung inputCheck
+  wenn IstMarke dann  //up
+    //Schnell
+    umdrehen
+    Schritt(2)
+    LinksDrehen
+    Schritt(14)
+    moveUp(1)
+    //Langsam
+  *wenn
+
+  wenn IstOsten dann //right
+    //Schnell
+    LinksDrehen
+    Schritt
+    RechtsDrehen
+    Schritt(14)
+    moveDown(3)
+    //Langsam
+  *wenn
+
+  wenn IstWesten dann //left
+    //Schnell
+    RechtsDrehen
+    Schritt
+    RechtsDrehen
+    Schritt(14)
+    moveUp(3)
+    //Langsam
+  *wenn
+
+  wenn IstZiegel dann //down
+    //Schnell
+    RechtsDrehen
+    Schritt(14)
+    moveDown(1)
+    //Langsam
+  *wenn
+*Anweisung
+
+
+
+//Start
+Schnell
+wiederhole solange nicht IstWesten
+  LinksDrehen
+*wiederhole
+wenn nicht IstWand dann
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  Schritt(17)
+  RechtsDrehen
+  Schritt
+sonst
+  LinksDrehen
+*wenn
+Langsam
+//At default position
+
+
+
+
+
+wiederhole immer
+
+  wiederhole 1500 mal
+    Langsam
+    Schnell
+    inputCheck
+  *wiederhole
+  findBall
+  moveBall
+
+
+*wiederhole
+
+
+
+
+
+
+
+
+
+
+
+
+

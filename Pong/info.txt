@@ -1,0 +1,52 @@
+﻿Programm von Jakob Heck 9a, 2019
+
+Einstellungen -> Karol -> Anzahl der Ziegel, die Karol springen kann: 10
+2D Modus nutzen, auf das Feld klicken, wenn Tasten nichts tun
+Im Schnelldurschlauf starten
+Im Menü Schwierigkeit auswählen (1 - langsam, 2 - normal, 3 - schnell)
+Pfeiltasten: Spieler 1: Oben/Unten,  Spieler 2: M/H
+Welt Groeße: 22x35x10, Pong.kdw
+
+
+
+
+------ Ziegel index ------
+4  = straight
+4  = straight inv
+
+- Slight -
+
+5  = slight angle up (1)
+5m = slight angle up inv (1)
+
+6  = slight angle up (2)
+6m = slight angle up inv (2)
+
+7  = slight angle down (1)
+7m = slight angle down inv (1)
+
+8  = slight angle down (2)
+8m = slight angle down inv (2)
+
+- Angle -
+
+9  = angle up
+9m = angle up inv
+
+10  = angle down
+10m = angle down inv
+------------------------
+
+
+todo:
+
+-Specify exact line to check for ball, since the first try at a 2 row save worked really well
+-make the ball detect the playerspot as a wall
+-add gameover screen 
+-add start screen with difficulty select, a debug mode and a way to skip its         
+-Hit the ball sideways when moving the paddle into it
+
+done:
+-Auto move up and measure distance to the ball to improve performance (Works amazingly well)
+-avoid hitting the ball from the side and crashing by moving the paddle into it
+-fix comments on the copy pasted part

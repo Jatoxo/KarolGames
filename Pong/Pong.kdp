@@ -1,0 +1,1744 @@
+//Einstellungen -> Karol -> Anzahl der Ziegel, die Karol springen kann: 10
+//2D Modus nutzen, auf das Feld klicken, wenn Tasten nichts tun
+//Im Schnelldurschlauf starten
+//Pfeiltasten: Oben/Unten - Spieler 1, M/H - Spieler 2
+//Welt Groeße: 22x35x10, Pong.kdw
+//Programm von Jakob Heck 9a, 2019
+
+
+Anweisung umdrehen
+  LinksDrehen
+  LinksDrehen
+*Anweisung
+
+
+Anweisung sbw
+  wiederhole solange nicht IstWand
+    Schritt
+  *wiederhole
+*Anweisung
+
+
+Anweisung gameover
+  //add
+  Ton
+  wiederhole x mal
+    LinksDrehen
+  *wiederhole
+  Beenden
+*Anweisung
+
+Bedingung isWallOrBrick
+  falsch
+  wenn IstWand dann
+    wahr
+  sonst
+    wenn IstZiegel dann
+      wahr
+    *wenn
+  *wenn
+*Bedingung
+
+
+Anweisung movePaddle
+  wenn IstZiegel(1) dann
+    Aufheben
+    Schritt
+    MarkeLöschen
+    wiederhole x mal
+      RechtsDrehen
+    *wiederhole
+  sonst
+    Schritt
+    wiederhole x mal
+      RechtsDrehen
+    *wiederhole
+    wiederhole solange nicht IstZiegel(1)
+      Schritt
+    *wiederhole
+    Schritt(5)
+    wenn nicht isWallOrBrick dann
+      umdrehen
+      Schritt(5)
+      umdrehen
+      Aufheben
+      Schritt
+      MarkeLöschen
+    *wenn
+  *wenn
+
+  wenn IstZiegel(2) dann
+    wiederhole 2 mal
+      Aufheben
+      Schritt
+    *wiederhole
+    wiederhole 2 mal
+      Hinlegen
+      Schritt
+    *wiederhole
+    Hinlegen
+    Schritt
+    MarkeSetzen
+    umdrehen
+  sonst
+    umdrehen
+  *wenn
+  wenn IstNorden dann
+    umdrehen
+  *wenn
+  sbw
+  RechtsDrehen
+  Schritt
+  wenn IstZiegel(4) dann
+    umdrehen
+    Schritt(16)
+    RechtsDrehen
+    Schritt
+  sonst
+    Schritt(14)
+    LinksDrehen
+    Schritt
+  *wenn
+*Anweisung
+
+
+Bedingung isBall
+  falsch
+  wenn IstZiegel dann
+    wahr
+    wenn IstZiegel(4) dann
+      wenn IstNorden dann
+        LinksDrehen
+      *wenn
+      wenn IstSüden dann
+        RechtsDrehen
+      *wenn
+      Schritt
+      wenn IstWand dann
+        falsch
+        wenn IstOsten dann
+          LinksDrehen
+          Schritt
+          LinksDrehen
+        sonst
+          wenn IstWesten dann
+            RechtsDrehen
+            Schritt
+            RechtsDrehen
+          *wenn
+        *wenn
+        wenn IstZiegel dann
+          wahr
+        *wenn
+      sonst
+        LinksDrehen
+        LinksDrehen
+        Schritt
+        LinksDrehen
+        LinksDrehen
+      *wenn
+    sonst
+      wenn IstZiegel(2) dann
+        falsch
+      sonst
+        wenn IstZiegel(3) dann
+          falsch
+        sonst
+          wenn IstZiegel(1) dann
+            Schritt
+            wenn nicht IstMarke dann
+              umdrehen
+              Schritt
+              umdrehen
+              Aufheben
+            sonst
+              umdrehen
+              Schritt
+              umdrehen
+            *wenn
+            falsch
+          *wenn
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+*Bedingung
+
+
+Anweisung moveDown
+  {  wenn nicht IstZiegel(1) dann
+    Schritt
+    wiederhole x mal
+      RechtsDrehen
+    *wiederhole
+    wiederhole solange nicht IstZiegel(1)
+      Schritt
+    *wiederhole
+    Schritt(5)
+    MarkeLöschen
+    wenn IstWand dann
+      Ton
+      umdrehen
+      Schritt
+      umdrehen
+      Aufheben
+      Schritt
+      umdrehen
+    sonst
+      Schritt
+      umdrehen
+      Aufheben
+      Schritt
+    *wenn
+    wiederhole 2 mal
+      Aufheben
+      Schritt
+    *wiederhole
+    wiederhole 2 mal
+      Hinlegen
+      Schritt
+    *wiederhole
+    Hinlegen
+    Schritt
+    MarkeSetzen
+    sbw
+    wiederhole x mal
+      LinksDrehen
+    *wiederhole
+    Schritt
+  sonst
+    umdrehen
+  *wenn
+  Schritt(14)
+  wiederhole x mal
+    RechtsDrehen
+  *wiederhole
+  Schritt}
+*Anweisung
+
+
+Anweisung findBall
+  RechtsDrehen
+  Schritt(2)
+  LinksDrehen
+  Schritt(17)
+  RechtsDrehen
+  Schritt(X)
+  RechtsDrehen
+
+  wiederhole solange nicht isBall
+    Schritt
+  *wiederhole
+*Anweisung
+
+
+Bedingung brick2or3
+  falsch
+  wenn IstZiegel(2) dann
+    wahr
+  sonst
+    wenn IstZiegel(3) dann
+      wahr
+    *wenn
+  *wenn
+*Bedingung
+
+
+Anweisung moveBall
+  wenn IstZiegel(4) dann
+    Aufheben(4)
+    Schritt
+    wiederhole solange nicht IstOsten
+      LinksDrehen
+    *wiederhole
+    wenn IstMarke dann
+      umdrehen
+    *wenn
+    wenn IstZiegel dann
+      wenn IstZiegel(4) dann
+        wenn IstMarke dann
+          gameover(1)
+        sonst
+          gameover(2)
+        *wenn
+      sonst
+        //handle collision with player
+        wenn IstZiegel(3) dann //Hit 3
+          umdrehen
+          wenn IstMarke dann
+            MarkeLöschen
+            Hinlegen(4)
+          sonst
+            Hinlegen(4)
+            Schritt
+            MarkeSetzen
+          *wenn
+        sonst
+          wenn IstZiegel(2) dann //Hit 2
+            //umdrehen
+            wenn IstMarke dann
+              MarkeLöschen
+              Schritt
+              RechtsDrehen
+              wenn IstZiegel(1) dann
+                RechtsDrehen
+                Schritt
+                Hinlegen(6)
+              sonst
+                RechtsDrehen
+                Schritt
+                Hinlegen(7)
+              *wenn
+            sonst
+              Schritt
+              LinksDrehen
+              wenn IstZiegel(1) dann
+                LinksDrehen
+                Schritt
+                Hinlegen(6)
+                Schritt
+                MarkeSetzen
+              sonst
+                LinksDrehen
+                Schritt
+                Hinlegen(7)
+                Schritt
+                MarkeSetzen
+              *wenn
+            *wenn
+          sonst
+            wenn IstZiegel(1) dann //Hit 1
+              wenn IstMarke dann
+                MarkeLöschen
+                Schritt
+                LinksDrehen
+                wenn IstZiegel(2) dann
+                  LinksDrehen
+                  Schritt(2)
+                  LinksDrehen
+                  Hinlegen(9)
+                sonst
+                  LinksDrehen
+                  Schritt(2)
+                  RechtsDrehen
+                  Hinlegen(10)
+                *wenn
+              sonst
+                Schritt
+                RechtsDrehen
+                wenn IstZiegel(2) dann
+                  RechtsDrehen
+                  Schritt(2)
+                  RechtsDrehen
+                  Hinlegen(9)
+                  Schritt
+                  MarkeSetzen
+                sonst
+                  RechtsDrehen
+                  Schritt(2)
+                  LinksDrehen
+                  Hinlegen(10)
+                  Schritt
+                  MarkeSetzen
+                *wenn
+              *wenn
+            *wenn //End Hit 1
+          *wenn //End Hit 2
+        *wenn  //End Hit 3
+      *wenn
+    sonst
+      Hinlegen(4)
+      wenn IstMarke dann
+        MarkeLöschen
+        Schritt
+        MarkeSetzen
+      *wenn
+    *wenn
+
+
+
+  sonst
+    wenn IstZiegel(5) dann  //Handle movement 5 bricks
+      Aufheben(5)
+      Schritt
+      wiederhole solange nicht IstOsten
+        LinksDrehen
+      *wiederhole
+      wenn IstMarke dann
+        umdrehen
+      *wenn
+      wenn IstZiegel dann
+        wenn IstZiegel(4) dann
+          wenn IstMarke dann
+            MarkeLöschen
+            gameover(1)
+          sonst
+            gameover(2)
+          *wenn
+        sonst
+          //handle collision with player
+          wenn IstZiegel(1) dann //Hit 1
+            umdrehen
+            wenn IstMarke dann
+              MarkeLöschen
+              Schritt
+              LinksDrehen
+              wenn IstWand dann
+                umdrehen
+                Hinlegen(10)
+              sonst
+                Hinlegen(9)
+              *wenn
+            sonst
+              Schritt
+              RechtsDrehen
+              wenn IstWand dann
+                umdrehen
+                Hinlegen(9)
+              sonst
+                Hinlegen(10)
+              *wenn
+              Schritt
+              MarkeSetzen
+            *wenn
+          sonst
+            wenn IstZiegel(2) dann //Hit 2
+              umdrehen
+              Hinlegen(6)
+              wenn IstMarke dann
+                MarkeLöschen
+              sonst
+                Schritt
+                MarkeSetzen
+              *wenn
+            sonst
+              wenn IstZiegel(3) dann //Hit 3
+                umdrehen
+                wenn IstMarke dann
+                  MarkeLöschen
+                  Hinlegen(4)
+                sonst
+                  Hinlegen(4)
+                  Schritt
+                  MarkeSetzen
+                *wenn
+              *wenn //End Hit 3
+            *wenn //End Hit 2
+          *wenn //End Hit 1
+          //End of handling collision with player
+        *wenn
+      sonst //Nothing in front
+        Hinlegen(6)
+        wenn IstMarke dann
+          MarkeLöschen
+          Schritt
+          MarkeSetzen
+        *wenn
+      *wenn
+
+
+
+    sonst
+      wenn IstZiegel(6) dann  //Handle movement 6 bricks   TEST!!!! -> SUCCESS!
+        Aufheben(6)
+        Schritt
+        wiederhole solange nicht IstOsten
+          LinksDrehen
+        *wiederhole
+        wenn IstMarke dann
+          umdrehen
+        *wenn
+        wenn IstZiegel dann
+          wenn IstZiegel(4) dann
+            wenn IstMarke dann
+              MarkeLöschen
+              gameover(1)
+            sonst
+              gameover(2)
+            *wenn
+          sonst //Collison Player
+            wenn IstZiegel(1) dann //Hit 1
+              wenn IstMarke dann
+                RechtsDrehen
+              sonst
+                LinksDrehen
+              *wenn
+              wenn IstWand dann
+                wenn IstMarke dann
+                  RechtsDrehen
+                  Schritt
+                  RechtsDrehen
+                  Hinlegen(10)
+                sonst
+                  LinksDrehen
+                  Schritt
+                  LinksDrehen
+                  Hinlegen(10)
+                  Schritt
+                  MarkeSetzen
+                *wenn
+              sonst
+                wenn IstMarke dann
+                  RechtsDrehen
+                  MarkeLöschen
+                  Schritt
+                  LinksDrehen
+                  Hinlegen(9)
+                sonst
+                  Schritt
+                  LinksDrehen
+                  Hinlegen(9)
+                  Schritt
+                  MarkeSetzen
+                *wenn
+              *wenn
+            sonst
+              wenn IstZiegel(2) dann //Hit 2
+                umdrehen
+                wenn IstMarke dann
+                  MarkeLöschen
+                  Schritt
+                  LinksDrehen
+                  Hinlegen(5)
+                sonst
+                  Schritt
+                  RechtsDrehen
+                  Hinlegen(5)
+                  Schritt
+                  MarkeSetzen
+                *wenn
+              sonst
+                wenn IstZiegel(3) dann //Hit 3
+                  umdrehen
+                  wenn IstMarke dann
+                    MarkeLöschen
+                    Hinlegen(4)
+                  sonst
+                    Hinlegen(4)
+                    Schritt
+                    MarkeSetzen
+                  *wenn
+                *wenn //End Hit 3
+              *wenn //End Hit 2
+            *wenn //End Hit 1
+          *wenn
+        sonst  // End of IstZiegel
+          wenn IstMarke dann
+            RechtsDrehen
+          sonst
+            LinksDrehen
+          *wenn
+          wenn IstWand dann //collision with wall nothing in front (might be diagonally)
+            wenn IstMarke dann
+              LinksDrehen
+              MarkeLöschen
+              Schritt
+              LinksDrehen
+              wenn IstZiegel(1) dann
+                LinksDrehen
+                Schritt(2)
+                RechtsDrehen
+                Hinlegen(10)
+              sonst
+                Hinlegen(7)
+                Schritt
+                MarkeSetzen
+              *wenn
+            sonst
+              RechtsDrehen
+              Schritt
+              RechtsDrehen
+              wenn IstZiegel(1) dann
+                RechtsDrehen
+                Schritt(2)
+                LinksDrehen
+                Hinlegen(10)
+                Schritt
+                MarkeSetzen
+              sonst
+                Hinlegen(7)
+              *wenn
+            *wenn
+          sonst //Nothing in front, no wall on top (test for diag brick)
+            wenn IstMarke dann
+              LinksDrehen
+              MarkeLöschen
+              Schritt
+              RechtsDrehen
+              wenn IstZiegel(1) dann
+                LinksDrehen
+                Schritt(2)
+                LinksDrehen
+                Hinlegen(10)
+              sonst
+                Hinlegen(5)
+                Schritt
+                MarkeSetzen
+              *wenn
+            sonst
+              RechtsDrehen
+              Schritt
+              LinksDrehen
+              wenn IstZiegel(1) dann
+                RechtsDrehen
+                Schritt(2)
+                RechtsDrehen
+                Hinlegen(10)
+                Schritt
+                MarkeSetzen
+              sonst
+                Hinlegen(5)
+              *wenn
+            *wenn
+          *wenn
+        *wenn
+
+
+
+      sonst
+        wenn IstZiegel(7) dann //Handle movement of 7 brick ball (slight angle down)
+          Aufheben(7)
+          Schritt
+          wiederhole solange nicht IstOsten
+            LinksDrehen
+          *wiederhole
+          wenn IstMarke dann
+            umdrehen
+          *wenn
+          wenn IstZiegel dann
+            wenn IstZiegel(4) dann
+              wenn IstMarke dann
+                gameover(1)
+              sonst
+                gameover(2)
+              *wenn
+            sonst //Collisions with player
+              wenn IstZiegel(1) dann  //HIT 1
+                wenn IstMarke dann
+                  LinksDrehen
+                sonst
+                  RechtsDrehen
+                *wenn
+                wenn IstWand dann
+                  wenn IstMarke dann
+                    MarkeLöschen
+                    LinksDrehen
+                    Schritt
+                    LinksDrehen
+                    Hinlegen(9)
+                  sonst
+                    RechtsDrehen
+                    Schritt
+                    RechtsDrehen
+                    Hinlegen(9)
+                    Schritt
+                    MarkeSetzen
+                  *wenn
+                sonst
+                  wenn IstMarke dann
+                    MarkeLöschen
+                    Schritt
+                    LinksDrehen
+                    Hinlegen(10)
+                  sonst
+                    Schritt
+                    RechtsDrehen
+                    Hinlegen(10)
+                    Schritt
+                    MarkeSetzen
+                  *wenn
+                *wenn
+              sonst
+                wenn IstZiegel(2) dann //HIT 2
+                  umdrehen
+                  wenn IstMarke dann
+                    MarkeLöschen
+                    Hinlegen(8)
+                  sonst
+                    Hinlegen(8)
+                    Schritt
+                    MarkeSetzen
+                  *wenn
+                sonst
+                  wenn IstZiegel(3) dann //HIT 3
+                    umdrehen
+                    wenn IstMarke dann
+                      MarkeLöschen
+                      Hinlegen(4)
+                    sonst
+                      Hinlegen(4)
+                      Schritt
+                      MarkeSetzen
+                    *wenn
+                  *wenn //End hit 3
+                *wenn //End hit 2
+              *wenn //End hit 1
+            *wenn
+          sonst  //End of IstZiegel
+            wenn IstMarke dann
+              MarkeLöschen
+              Hinlegen(8)
+              Schritt
+              MarkeSetzen
+            sonst
+              Hinlegen(8)
+            *wenn
+          *wenn
+        sonst
+
+
+
+          wenn IstZiegel(8) dann
+            Aufheben(8)
+            Schritt
+            wiederhole solange nicht IstOsten
+              LinksDrehen
+            *wiederhole
+            wenn IstMarke dann
+              umdrehen
+            *wenn
+            wenn IstZiegel dann
+              wenn IstZiegel(4) dann
+                wenn IstMarke dann
+                  MarkeLöschen
+                  gameover(1)
+                sonst
+                  gameover(2)
+                *wenn
+              sonst //Collison Player
+                wenn IstZiegel(1) dann //Hit 1
+                  wenn IstMarke dann
+                    LinksDrehen
+                  sonst
+                    RechtsDrehen
+                  *wenn
+                  wenn IstWand dann
+                    wenn IstMarke dann
+                      LinksDrehen
+                      Schritt
+                      LinksDrehen
+                      Hinlegen(9)
+                    sonst
+                      RechtsDrehen
+                      Schritt
+                      RechtsDrehen
+                      Hinlegen(9)
+                      Schritt
+                      MarkeSetzen
+                    *wenn
+                  sonst
+                    wenn IstMarke dann
+                      RechtsDrehen
+                      MarkeLöschen
+                      Schritt
+                      LinksDrehen
+                      Hinlegen(7)
+                      Schritt
+                      MarkeSetzen
+                    sonst
+                      LinksDrehen
+                      MarkeLöschen
+                      Schritt
+                      RechtsDrehen
+                      Hinlegen(7)
+                    *wenn
+                  *wenn
+                sonst
+                  wenn IstZiegel(2) dann //Hit 2
+                    umdrehen
+                    wenn IstMarke dann
+                      MarkeLöschen
+                      Schritt
+                      RechtsDrehen
+                      Hinlegen(7)
+                    sonst
+                      Schritt
+                      LinksDrehen
+                      Hinlegen(7)
+                      Schritt
+                      MarkeSetzen
+                    *wenn
+                  sonst
+                    wenn IstZiegel(3) dann //Hit 3
+                      umdrehen
+                      wenn IstMarke dann
+                        MarkeLöschen
+                        Hinlegen(4)
+                      sonst
+                        Hinlegen(4)
+                        Schritt
+                        MarkeSetzen
+                      *wenn
+                    *wenn //End Hit 3
+                  *wenn //End Hit 2
+                *wenn //End Hit 1
+              *wenn
+            sonst  // End of IstZiegel
+              wenn IstMarke dann
+                LinksDrehen
+              sonst
+                RechtsDrehen
+              *wenn
+              wenn IstWand dann //collision with wall nothing in front (might be diagonally)
+                wenn IstMarke dann
+                  RechtsDrehen
+                  MarkeLöschen
+                  Schritt
+                  RechtsDrehen
+                  wenn IstZiegel(1) dann
+                    RechtsDrehen
+                    Schritt(2)
+                    LinksDrehen
+                    Hinlegen(9)
+                  sonst
+                    Hinlegen(5)
+                    Schritt
+                    MarkeSetzen
+                  *wenn
+                sonst
+                  LinksDrehen
+                  Schritt
+                  LinksDrehen
+                  wenn IstZiegel(1) dann
+                    LinksDrehen
+                    Schritt(2)
+                    RechtsDrehen
+                    Hinlegen(9)
+                    Schritt
+                    MarkeSetzen
+                  sonst
+                    Hinlegen(5)
+                  *wenn
+                *wenn
+              sonst //Nothing in front, no wall on bottom (test for diag brick)
+                wenn IstMarke dann
+                  MarkeLöschen
+                  Schritt
+                  RechtsDrehen
+                  wenn IstZiegel(1) dann
+                    RechtsDrehen
+                    Schritt(2)
+                    RechtsDrehen
+                    Hinlegen(9)
+                  sonst
+                    Hinlegen(7)
+                    Schritt
+                    MarkeSetzen
+                  *wenn
+                sonst
+                  Schritt
+                  LinksDrehen
+                  wenn IstZiegel(1) dann
+                    LinksDrehen
+                    Schritt(2)
+                    LinksDrehen
+                    Hinlegen(9)
+                    Schritt
+                    MarkeSetzen
+                  sonst
+                    Hinlegen(7)
+                  *wenn
+                *wenn
+              *wenn
+            *wenn
+
+
+
+          sonst
+            wenn IstZiegel(9) dann
+              Aufheben(9)
+              Schritt
+              wiederhole solange nicht IstOsten
+                LinksDrehen
+              *wiederhole
+              wenn IstMarke dann
+                umdrehen
+              *wenn
+              wenn IstZiegel dann //Collision with player
+                wenn IstZiegel(1) dann //Hit 1
+                  wenn IstMarke dann
+                    MarkeLöschen
+                    Schritt
+                    RechtsDrehen
+                    wenn IstZiegel dann
+                      Schritt
+                      RechtsDrehen
+                      Schritt
+                      Hinlegen(9)
+                    sonst
+                      wenn IstWand dann
+                        RechtsDrehen
+                        Schritt(2)
+                        RechtsDrehen
+                        Hinlegen(9)
+                      sonst
+                        Hinlegen(9)
+                        Schritt
+                        MarkeSetzen
+                      *wenn
+                    *wenn
+                  sonst
+                    Schritt
+                    LinksDrehen
+                    wenn IstZiegel dann
+                      Schritt
+                      LinksDrehen
+                      Schritt
+                      Hinlegen(9)
+                      Schritt
+                      MarkeSetzen
+                    sonst
+                      wenn IstWand dann
+                        RechtsDrehen
+                        Schritt(2)
+                        LinksDrehen
+                        Hinlegen(10)
+                      sonst
+                        Hinlegen(9)
+                      *wenn
+                    *wenn
+                  *wenn
+                sonst
+                  wenn brick2or3 dann //Hit 3 or 2
+                    wenn IstMarke dann
+                      MarkeLöschen
+                      RechtsDrehen
+                      Schritt
+                      RechtsDrehen
+                      Hinlegen(6)
+                    sonst
+                      LinksDrehen
+                      Schritt
+                      LinksDrehen
+                      Hinlegen(6)
+                      Schritt
+                      MarkeSetzen
+                    *wenn
+                  sonst
+                    wenn IstZiegel(4) dann
+                      wenn IstMarke dann
+                        gameover(1)
+                      sonst
+                        gameover(2)
+                      *wenn
+                    *wenn
+                  *wenn //End hit 3 or 2
+                *wenn //End hit 1
+              sonst  //End of IstZiegel
+                wenn IstMarke dann
+                  RechtsDrehen
+                sonst
+                  LinksDrehen
+                *wenn
+                wenn IstWand dann
+                  wenn IstMarke dann
+                    LinksDrehen
+                    MarkeLöschen
+                    Schritt
+                    LinksDrehen
+                    Hinlegen(10)
+                    Schritt
+                    MarkeSetzen
+                  sonst
+                    RechtsDrehen
+                    Schritt
+                    RechtsDrehen
+                    Hinlegen(10)
+                  *wenn
+                sonst //No wall no brick, test diag player
+                  wenn IstMarke dann
+                    LinksDrehen
+                    MarkeLöschen
+                    Schritt
+                    RechtsDrehen
+                    wenn IstZiegel(1) dann
+                      RechtsDrehen
+                      Schritt(2)
+                      RechtsDrehen
+                      Hinlegen(10)
+                    sonst
+                      Hinlegen(9)
+                      Schritt
+                      MarkeSetzen
+                    *wenn
+                  sonst
+                    RechtsDrehen
+                    Schritt
+                    LinksDrehen
+                    wenn IstZiegel(1) dann
+                      LinksDrehen
+                      Schritt(2)
+                      LinksDrehen
+                      Hinlegen(10)
+                      Schritt
+                      MarkeSetzen
+                    sonst
+                      Hinlegen(9)
+                    *wenn
+                  *wenn
+                *wenn
+              *wenn
+            sonst
+
+
+
+              Aufheben(10)
+              Schritt
+              wiederhole solange nicht IstOsten
+                LinksDrehen
+              *wiederhole
+              wenn IstMarke dann
+                umdrehen
+              *wenn
+              wenn IstZiegel dann //Collision with player
+                wenn IstZiegel(1) dann //Hit 1
+                  wenn IstMarke dann
+                    MarkeLöschen
+                    Schritt
+                    LinksDrehen
+                    wenn IstZiegel dann
+                      Schritt
+                      LinksDrehen
+                      Schritt
+                      Hinlegen(10)
+                    sonst
+                      wenn IstWand dann
+                        LinksDrehen
+                        Schritt(2)
+                        LinksDrehen
+                        Hinlegen(9)
+                      sonst
+                        Hinlegen(10)
+                        Schritt
+                        MarkeSetzen
+                      *wenn
+                    *wenn
+                  sonst
+                    Schritt
+                    RechtsDrehen
+                    wenn IstZiegel dann
+                      Schritt
+                      RechtsDrehen
+                      Schritt
+                      Hinlegen(10)
+                      Schritt
+                      MarkeSetzen
+                    sonst
+                      wenn IstWand dann
+                        RechtsDrehen
+                        Schritt(2)
+                        RechtsDrehen
+                        Hinlegen(9)
+                        Schritt
+                        MarkeSetzen
+                      sonst
+                        Hinlegen(10)
+                      *wenn
+                    *wenn
+                  *wenn
+                sonst
+                  wenn brick2or3 dann //Hit 3 or 2
+                    wenn IstMarke dann
+                      MarkeLöschen
+                      LinksDrehen
+                      Schritt
+                      LinksDrehen
+                      Hinlegen(8)
+                    sonst
+                      RechtsDrehen
+                      Schritt
+                      RechtsDrehen
+                      Hinlegen(8)
+                      Schritt
+                      MarkeSetzen
+                    *wenn
+                  sonst
+                    wenn IstZiegel(4) dann
+                      wenn IstMarke dann
+                        gameover(1)
+                      sonst
+                        gameover(2)
+                      *wenn
+                    *wenn
+                  *wenn //End hit 3 or 2
+                *wenn //End hit 1
+              sonst  //End of IstZiegel
+                wenn IstMarke dann
+                  LinksDrehen
+                sonst
+                  RechtsDrehen
+                *wenn
+                wenn IstWand dann
+                  wenn IstMarke dann
+                    RechtsDrehen
+                    MarkeLöschen
+                    Schritt
+                    RechtsDrehen
+                    Hinlegen(9)
+                    Schritt
+                    MarkeSetzen
+                  sonst
+                    LinksDrehen
+                    Schritt
+                    LinksDrehen
+                    Hinlegen(9)
+                  *wenn
+                sonst //No wall no brick, test diag player
+                  wenn IstMarke dann
+                    RechtsDrehen
+                    MarkeLöschen
+                    Schritt
+                    LinksDrehen
+                    wenn IstZiegel(1) dann
+                      LinksDrehen
+                      Schritt(2)
+                      LinksDrehen
+                      Hinlegen(9)
+                    sonst
+                      Hinlegen(10)
+                      Schritt
+                      MarkeSetzen
+                    *wenn
+                  sonst
+                    LinksDrehen
+                    Schritt
+                    RechtsDrehen
+                    wenn IstZiegel(1) dann
+                      RechtsDrehen
+                      Schritt(2)
+                      RechtsDrehen
+                      Hinlegen(9)
+                      Schritt
+                      MarkeSetzen
+                    sonst
+                      Hinlegen(10)
+                    *wenn
+                  *wenn
+                *wenn
+              *wenn
+
+
+
+            *wenn
+          *wenn
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+
+
+
+
+  wenn IstZiegel dann
+    Schritt
+  *wenn
+
+  wiederhole solange nicht IstWesten
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+
+  wenn nicht IstWand dann
+    Schritt
+  *wenn
+  wenn IstWand dann
+    //to start s1
+    LinksDrehen
+    Schritt(17)
+    RechtsDrehen
+    Schritt(2)
+    RechtsDrehen
+    wiederhole solange nicht IstZiegel(1)
+      Aufheben
+    *wiederhole
+  sonst
+    wiederhole 2 mal
+      wenn nicht IstWand dann
+        Schritt
+      *wenn
+    *wiederhole
+    wenn IstWand dann
+      //to start s2
+      LinksDrehen
+      Schritt(17)
+      RechtsDrehen
+      Schritt(2)
+      RechtsDrehen
+      wiederhole solange nicht IstZiegel(1)
+        Aufheben
+      *wiederhole
+      Hinlegen(1)
+    sonst
+      wiederhole 2 mal
+        wenn nicht IstWand dann
+          Schritt
+        *wenn
+      *wiederhole
+      wenn IstWand dann
+        //to start s3
+        LinksDrehen
+        Schritt(17)
+        RechtsDrehen
+        Schritt(2)
+        RechtsDrehen
+        wiederhole solange nicht IstZiegel(1)
+          Aufheben
+        *wiederhole
+        Hinlegen(2)
+      sonst
+        wiederhole 2 mal
+          wenn nicht IstWand dann
+            Schritt
+          *wenn
+        *wiederhole
+        wenn IstWand dann
+          //to start s4
+          LinksDrehen
+          Schritt(17)
+          RechtsDrehen
+          Schritt(2)
+          RechtsDrehen
+          wiederhole solange nicht IstZiegel(1)
+            Aufheben
+          *wiederhole
+          Hinlegen(3)
+        sonst
+          wiederhole 2 mal
+            wenn nicht IstWand dann
+              Schritt
+            *wenn
+          *wiederhole
+          wenn IstWand dann
+            //to start s5
+            LinksDrehen
+            Schritt(17)
+            RechtsDrehen
+            Schritt(2)
+            RechtsDrehen
+            wiederhole solange nicht IstZiegel(1)
+              Aufheben
+            *wiederhole
+            Hinlegen(4)
+          sonst
+            wiederhole 2 mal
+              wenn nicht IstWand dann
+                Schritt
+              *wenn
+            *wiederhole
+            wenn IstWand dann
+              //to start s6
+              LinksDrehen
+              Schritt(17)
+              RechtsDrehen
+              Schritt(2)
+              RechtsDrehen
+              wiederhole solange nicht IstZiegel(1)
+                Aufheben
+              *wiederhole
+              Hinlegen(5)
+            sonst
+              wiederhole 2 mal
+                wenn nicht IstWand dann
+                  Schritt
+                *wenn
+              *wiederhole
+              wenn IstWand dann
+                //to start s7
+                LinksDrehen
+                Schritt(17)
+                RechtsDrehen
+                Schritt(2)
+                RechtsDrehen
+                wiederhole solange nicht IstZiegel(1)
+                  Aufheben
+                *wiederhole
+                Hinlegen(6)
+              sonst
+                wiederhole 2 mal
+                  wenn nicht IstWand dann
+                    Schritt
+                  *wenn
+                *wiederhole
+                wenn IstWand dann
+                  //to start s8
+                  LinksDrehen
+                  Schritt(17)
+                  RechtsDrehen
+                  Schritt(2)
+                  RechtsDrehen
+                  wiederhole solange nicht IstZiegel(1)
+                    Aufheben
+                  *wiederhole
+                  Hinlegen(7)
+                sonst
+                  wiederhole 2 mal
+                    wenn nicht IstWand dann
+                      Schritt
+                    *wenn
+                  *wiederhole
+                  wenn IstWand dann
+                    //to start s9
+                    LinksDrehen
+                    Schritt(17)
+                    RechtsDrehen
+                    Schritt(2)
+                    RechtsDrehen
+                    wiederhole solange nicht IstZiegel(1)
+                      Aufheben
+                    *wiederhole
+                    Hinlegen(8)
+                  sonst
+                    wiederhole 2 mal
+                      wenn nicht IstWand dann
+                        Schritt
+                      *wenn
+                    *wiederhole
+                    wenn IstWand dann
+                      //to start s10
+                      LinksDrehen
+                      Schritt(17)
+                      RechtsDrehen
+                      Schritt(2)
+                      RechtsDrehen
+                      wiederhole solange nicht IstZiegel(1)
+                        Aufheben
+                      *wiederhole
+                      Hinlegen(9)
+                    sonst
+                      Beenden
+                    *wenn
+                  *wenn
+                *wenn
+              *wenn
+            *wenn
+          *wenn
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+  RechtsDrehen
+  Schritt
+  LinksDrehen
+  LinksDrehen
+
+*Anweisung
+
+Anweisung callFindBall
+  wenn IstZiegel(1) dann
+    findBall(0)
+  sonst
+    wenn IstZiegel(2) dann
+      findBall(2)
+    sonst
+      wenn IstZiegel(3) dann
+        findBall(4)
+      sonst
+        wenn IstZiegel(4) dann
+          findBall(6)
+        sonst
+          wenn IstZiegel(5) dann
+            findBall(8)
+          sonst
+            wenn IstZiegel(6) dann
+              findBall(10)
+            sonst
+              wenn IstZiegel(7) dann
+                findBall(12)
+              sonst
+                wenn IstZiegel(8) dann
+                  findBall(14)
+                sonst
+                  wenn IstZiegel(9) dann
+                    findBall(16)
+                  sonst
+                    wenn IstZiegel(10) dann
+                      findBall(18)
+                    sonst
+                      Beenden
+                    *wenn
+                  *wenn
+                *wenn
+              *wenn
+            *wenn
+          *wenn
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+*Anweisung
+
+
+Anweisung inputCheckAlt
+  wenn IstMarke dann  //up
+    //Schnell
+    umdrehen
+    Schritt(2)
+    LinksDrehen
+    Schritt(14)
+    movePaddle(1)
+    //Langsam
+  *wenn
+
+  wenn IstWesten dann //right
+    //Schnell
+    RechtsDrehen
+    Schritt
+    RechtsDrehen
+    Schritt(14)
+    LinksDrehen
+    Schritt(19)
+    RechtsDrehen
+    movePaddle(1)
+    //Langsam
+  *wenn
+
+  wenn IstOsten dann //left
+    //Schnell
+    LinksDrehen
+    Schritt
+    RechtsDrehen
+    Schritt(14)
+    movePaddle(3)
+    //Langsam
+  *wenn
+
+  wenn IstZiegel(10) dann //down
+    //Schnell
+    RechtsDrehen
+    Schritt(14)
+    RechtsDrehen
+    Schritt(19)
+    LinksDrehen
+    movePaddle(3)
+    //Langsam
+  *wenn
+*Anweisung
+
+Anweisung inputCheck
+
+  wenn IstOsten dann
+    RechtsDrehen
+  *wenn
+
+  wenn IstWesten dann
+    LinksDrehen
+  *wenn
+
+  wenn IstWand dann  //up
+    //Schnell
+    umdrehen
+    Schritt(2)
+    LinksDrehen
+    Schritt(14)
+    movePaddle(1)
+    //Langsam
+  *wenn
+
+  wenn IstZiegel(1) dann //right
+    //Schnell
+    Aufheben
+    umdrehen
+    Schritt
+    RechtsDrehen
+    Schritt(14)
+    LinksDrehen
+    Schritt(19)
+    RechtsDrehen
+    movePaddle(1)
+    //Langsam
+  *wenn
+
+  wenn IstMarke dann //left
+    //Schnell
+    MarkeLöschen
+    umdrehen
+    Schritt
+    RechtsDrehen
+    Schritt(14)
+    movePaddle(3)
+    //Langsam
+  *wenn
+
+  wenn IstZiegel(10) dann //down
+    //Schnell
+    RechtsDrehen
+    Schritt(14)
+    RechtsDrehen
+    Schritt(19)
+    LinksDrehen
+    movePaddle(3)
+    //Langsam
+  *wenn
+*Anweisung
+
+Bedingung isBrick123
+  falsch
+  wenn IstZiegel(1) dann
+    Schritt
+    wenn IstMarke dann
+      umdrehen
+      Schritt
+      umdrehen
+    sonst
+      wahr
+      umdrehen
+      Schritt
+      umdrehen
+    *wenn
+    wahr
+  sonst
+    wenn IstZiegel(2) dann
+      wahr
+    sonst
+      wenn IstZiegel(3)dann
+        wahr
+      *wenn
+    *wenn
+  *wenn
+*Bedingung
+
+
+Anweisung select
+  umdrehen
+  Schritt(6)
+  LinksDrehen
+  Schritt(8)
+  umdrehen
+  wiederhole solange NichtIstMarke
+    Schritt
+  *wiederhole
+  LinksDrehen
+  Schritt
+*Anweisung
+
+
+Anweisung saveDifficulty
+  LinksDrehen
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  Schritt(17)
+  RechtsDrehen
+  Schritt(2)
+  LinksDrehen
+  Hinlegen(X)
+*Anweisung
+
+
+//Start
+Schnell
+wiederhole solange nicht IstWesten
+  LinksDrehen
+*wiederhole
+wenn nicht IstWand dann
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  Schritt(17)
+  RechtsDrehen
+  Schritt
+sonst
+  umdrehen
+  wenn IstWand dann
+    RechtsDrehen
+  sonst
+    RechtsDrehen
+    sbw
+    LinksDrehen
+    Schritt(17)
+    RechtsDrehen
+    Schritt
+  *wenn
+
+*wenn
+Langsam
+//At default position
+
+Schnell
+Schritt
+LinksDrehen
+wenn nicht IstZiegel dann
+  LinksDrehen
+  Schritt
+  umdrehen
+*wenn
+
+wiederhole solange nicht isBrick123
+  Langsam
+  Schnell
+  wenn IstWesten dann //right
+    RechtsDrehen
+    Schritt(6)
+    LinksDrehen
+    wenn IstMarke dann
+      MarkeLöschen
+      Schritt
+      LinksDrehen
+      Schritt
+      MarkeLöschen
+      LinksDrehen
+      Schritt(2)
+      MarkeLöschen
+      Schritt(6)
+      MarkeSetzen
+      Schritt(2)
+      MarkeSetzen
+      LinksDrehen
+      Schritt
+      LinksDrehen
+      Schritt
+      MarkeSetzen
+      Schritt(8)
+      LinksDrehen
+      Schritt(6)
+    sonst
+      Schritt(8)
+      wenn IstMarke dann
+        MarkeLöschen
+        Schritt
+        LinksDrehen
+        Schritt
+        MarkeLöschen
+        LinksDrehen
+        Schritt(2)
+        MarkeLöschen
+        Schritt(6)
+        MarkeSetzen
+        Schritt(2)
+        MarkeSetzen
+        LinksDrehen
+        Schritt
+        LinksDrehen
+        Schritt
+        MarkeSetzen
+        LinksDrehen
+        Schritt(6)
+      sonst
+        umdrehen
+        Schritt(8)
+        RechtsDrehen
+        Schritt(6)
+      *wenn
+    *wenn
+  *wenn
+
+  wenn IstOsten dann  //left
+    LinksDrehen
+    Schritt(6)
+    RechtsDrehen
+    wenn IstMarke dann
+      MarkeLöschen
+      Schritt
+      RechtsDrehen
+      Schritt
+      MarkeLöschen
+      RechtsDrehen
+      Schritt(2)
+      MarkeLöschen
+      Schritt(6)
+      MarkeSetzen
+      Schritt(2)
+      MarkeSetzen
+      RechtsDrehen
+      Schritt
+      RechtsDrehen
+      Schritt
+      MarkeSetzen
+      Schritt(8)
+      RechtsDrehen
+      Schritt(6)
+    sonst
+      Schritt(8)
+      wenn IstMarke dann
+        MarkeLöschen
+        Schritt
+        RechtsDrehen
+        Schritt
+        MarkeLöschen
+        RechtsDrehen
+        Schritt(2)
+        MarkeLöschen
+        Schritt(6)
+        MarkeSetzen
+        Schritt(2)
+        MarkeSetzen
+        RechtsDrehen
+        Schritt
+        RechtsDrehen
+        Schritt
+        MarkeSetzen
+        RechtsDrehen
+        Schritt(6)
+      sonst
+        umdrehen
+        Schritt(8)
+        LinksDrehen
+        Schritt(6)
+      *wenn
+    *wenn
+  *wenn
+
+  wenn IstMarke dann
+    wenn nicht IstWand dann
+      MarkeLöschen
+    sonst
+      umdrehen
+      Schritt
+      umdrehen
+    *wenn
+    select
+  sonst
+
+    wenn IstZiegel dann
+      wenn IstZiegel(1) dann
+        Aufheben
+      sonst
+        Schritt
+      *wenn
+      select
+    *wenn
+  *wenn
+*wiederhole
+//Difficulty in front
+RechtsDrehen
+wenn nicht IstWand dann
+  LinksDrehen
+  wenn IstZiegel(1)dann
+    saveDifficulty(1)
+  sonst
+    wenn IstZiegel(2) dann
+      saveDifficulty(2)
+    sonst
+      wenn IstZiegel(3)dann
+        saveDifficulty(3)
+      *wenn
+    *wenn
+  *wenn
+sonst
+  LinksDrehen
+*wenn
+//Beenden //Difficulty in save spot
+LinksDrehen
+Schritt
+umdrehen
+
+//Add
+
+wiederhole immer
+  wiederhole 2500 mal //<-------------------------------------------Geschwindigkeit
+    Langsam
+    Schnell
+    inputCheck
+
+  *wiederhole
+  Schritt
+  RechtsDrehen
+  callFindBall
+  moveBall
+*wiederhole
+
+
+
