@@ -1,0 +1,908 @@
+//[Anleitung]-Unter Einstellungen -> Karol die
+//            maximale Sprunghöhe von Karol auf 10 setzen!
+
+//[Anleitung]-2D Modus (f5) einschalten
+
+//[Anleitung]-Programm im Schnelldurchlauf starten, ein mal auf
+//            das Programmfeld klicken, mit den Pfeiltasten
+//            steuern
+
+//[Anleitung]-Eventuell die Geschwindigkeit Anpassen. Einstellungen und Werte, die
+//            angepasst werden können sind so hervorgehoben: Wert//<-------------------[Einstellung] Beschreibung
+
+//[Info]Das Programm wurde geschrieben von Jakob Heck, 9a
+
+
+
+
+//Einfügen anweisungen *Einfügen
+
+Anweisung umdrehen
+  LinksDrehen
+  LinksDrehen
+*Anweisung
+
+Anweisung sbw
+  wiederhole solange NichtIstWand
+    Schritt
+  *wiederhole
+*Anweisung
+
+Anweisung mmarkesetzen
+  wenn NichtIstMarke dann
+    MarkeSetzen
+  *wenn
+*Anweisung
+
+Anweisung error
+  wiederhole solange nicht IstNorden
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  wenn IstWand dann
+    LinksDrehen
+    wenn IstWand dann
+      RechtsDrehen
+      MarkeSetzen
+      Beenden
+    *wenn
+  *wenn
+  wiederhole 4 mal
+    wiederhole solange NichtIstWand
+      Schritt
+      mmarkesetzen
+    *wiederhole
+    LinksDrehen
+  *wiederhole
+  wenn IstOsten dann
+    RechtsDrehen
+  *wenn
+  Beenden
+*Anweisung
+
+
+Bedingung isEmpty
+  {Returns true if the box in front is empty and not a wall}
+  wahr
+  wenn IstZiegel dann
+    falsch
+  *wenn
+  wenn IstWand dann
+    falsch
+  sonst
+    Schritt
+    wenn IstMarke dann
+      falsch
+    *wenn
+    umdrehen
+    Schritt
+    umdrehen
+  *wenn
+*Bedingung
+
+Bedingung isEmptyAround
+  {Locates an empty box in all 4 directions and stops facing towards it}
+  falsch
+  wiederhole 4 mal
+    wenn nicht isEmpty dann
+      LinksDrehen
+    sonst
+      wahr
+    *wenn
+  *wiederhole
+*Bedingung
+
+Bedingung isMarkerAhead
+  falsch
+  Schritt
+  wenn IstMarke dann
+    wahr
+  *wenn
+  umdrehen
+  Schritt
+  umdrehen
+*Bedingung
+
+Bedingung isBrickOrWall
+  falsch
+  wenn IstWand dann
+    wahr
+  *wenn
+  wenn IstZiegel dann
+    wahr
+  *wenn
+*Bedingung
+
+Bedingung canMoveHead
+  wahr
+  wenn IstWand dann
+    falsch
+  sonst
+    Schritt
+    wenn IstMarke dann
+      falsch
+    *wenn
+    umdrehen
+    Schritt
+    umdrehen
+  *wenn
+  wenn IstZiegel dann
+    falsch
+  *wenn
+*Bedingung
+
+Bedingung isTail
+  {Returns true if the tail of the snake is in front}
+  falsch
+  wenn IstZiegel(1) dann
+    Schritt
+    wenn nicht IstMarke dann
+      wahr
+    *wenn
+    umdrehen
+    Schritt
+    umdrehen
+  *wenn
+  wenn IstZiegel(2) dann
+    Schritt
+    wenn nicht IstMarke dann
+      wahr
+    *wenn
+    umdrehen
+    Schritt
+    umdrehen
+  *wenn
+  wenn IstZiegel(3) dann
+    Schritt
+    wenn nicht IstMarke dann
+      wahr
+    *wenn
+    umdrehen
+    Schritt
+    umdrehen
+  *wenn
+  wenn IstZiegel(4) dann
+    Schritt
+    wenn nicht IstMarke dann
+      wahr
+    *wenn
+    umdrehen
+    Schritt
+    umdrehen
+  *wenn
+*Bedingung
+
+Bedingung isHead
+  {Returns true if the head of the snake is in front}
+  falsch
+  wenn IstZiegel(5) dann
+    wahr
+  *wenn
+  wenn IstZiegel(6) dann
+    wahr
+  *wenn
+  wenn IstZiegel(7) dann
+    wahr
+  *wenn
+  wenn IstZiegel(8) dann
+    wahr
+  *wenn
+*Bedingung
+
+Anweisung findHead
+  {Locates the Snake head and stands in front
+   of it(Call:BL,Fcng:E)}
+  Schritt
+  umdrehen
+  wenn nicht isHead dann
+    Schritt
+    umdrehen
+    wiederhole solange nicht isHead
+      wenn NichtIstWand dann
+        Schritt
+      sonst
+        wenn IstOsten dann
+          LinksDrehen
+          wenn nicht isHead dann
+            wenn IstWand dann
+              error
+            *wenn
+            Schritt
+            LinksDrehen
+          *wenn
+        sonst
+          RechtsDrehen
+          wenn nicht isHead dann
+            wenn IstWand dann
+              error
+            *wenn
+            Schritt
+            RechtsDrehen
+          *wenn
+        *wenn
+      *wenn
+    *wiederhole
+  *wenn
+*Anweisung
+
+Anweisung findTail
+  {Locates the Snake tail and stands in front
+   of it(Call:BL,Fcng:E)}
+  Schritt
+  umdrehen
+  wenn nicht isTail dann
+    Schritt
+    umdrehen
+    wiederhole solange nicht isTail
+      wenn NichtIstWand dann
+        Schritt
+      sonst
+        wenn IstOsten dann
+          LinksDrehen
+          wenn nicht isTail dann
+            wenn IstWand dann
+              error
+            *wenn
+            Schritt
+            LinksDrehen
+          *wenn
+        sonst
+          RechtsDrehen
+          wenn nicht isTail dann
+            wenn IstWand dann
+              error
+            *wenn
+            Schritt
+            RechtsDrehen
+          *wenn
+        *wenn
+      *wenn
+    *wiederhole
+  *wenn
+*Anweisung
+
+Anweisung moveTail
+  {Moves the tail of the snake in the correct direction}
+  Aufheben(X)
+  Schritt
+  wiederhole solange nicht IstWesten
+    LinksDrehen
+  *wiederhole
+  wiederhole x mal
+    RechtsDrehen
+  *wiederhole
+  wenn nicht IstZiegel dann
+    Hinlegen(X)
+  *wenn
+  Schritt
+  MarkeLöschen
+*Anweisung
+
+Anweisung iteratePointIndicator
+  wenn IstZiegel(10) dann
+    Aufheben(10)
+  sonst
+    Hinlegen
+  *wenn
+  umdrehen
+  Schritt(14)
+  RechtsDrehen
+  Schritt
+*Anweisung
+
+Anweisung newPoint
+  {Places a new Point. The position depends on how many bricks
+  are in front. Ready for findHead/Tail after called}
+  wenn IstZiegel(1) dann
+    iteratePointIndicator
+    Schritt(3)
+    RechtsDrehen
+    Schritt(9)
+  sonst
+    wenn IstZiegel(2) dann
+      iteratePointIndicator
+      Schritt(4)
+      LinksDrehen
+      Schritt(11)
+    sonst
+      wenn IstZiegel(3) dann
+        iteratePointIndicator
+        Schritt(15)
+        RechtsDrehen
+        Schritt(12)
+      sonst
+        wenn IstZiegel(4) dann
+          iteratePointIndicator
+          Schritt(2)
+          RechtsDrehen
+          Schritt
+        sonst
+          wenn IstZiegel(5) dann
+            iteratePointIndicator
+            Schritt(10)
+            LinksDrehen
+            Schritt(12)
+          sonst
+            wenn IstZiegel(6) dann
+              iteratePointIndicator
+              Schritt(7)
+            sonst
+              wenn IstZiegel(7) dann
+                iteratePointIndicator
+                Schritt(16)
+                LinksDrehen
+                Schritt(12)
+              sonst
+                wenn IstZiegel(8) dann
+                  iteratePointIndicator
+                  Schritt(8)
+                  RechtsDrehen
+                  Schritt(9)
+                sonst
+                  wenn IstZiegel(9) dann
+                    iteratePointIndicator
+                    Schritt(6)
+                    LinksDrehen
+                    Schritt(4)
+                  sonst
+                    wenn IstZiegel(10) dann
+                      iteratePointIndicator
+                      Schritt(14)
+                      RechtsDrehen
+                      Schritt(5)
+                    sonst
+                      iteratePointIndicator
+                      Schritt(13)
+                      LinksDrehen
+                      Schritt(4)
+                    *wenn
+                  *wenn
+                *wenn
+              *wenn
+            *wenn
+          *wenn
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+  wiederhole solange nicht isEmptyAround
+    wenn nicht IstWand dann
+      Schritt
+    sonst
+      wenn IstOsten dann
+        RechtsDrehen
+        wenn nicht IstWand dann
+          Schritt
+          RechtsDrehen
+        sonst
+          umdrehen
+          Schritt(16)
+          LinksDrehen
+          Schritt(30)
+          umdrehen
+        *wenn
+      sonst
+        LinksDrehen
+        wenn nicht IstWand dann
+          Schritt
+          LinksDrehen
+        sonst
+          umdrehen
+          Schritt(16)
+          RechtsDrehen
+        *wenn
+      *wenn
+    *wenn
+  *wiederhole
+  Hinlegen(10)
+  wiederhole solange nicht IstWesten
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+*Anweisung
+
+Anweisung moveSegment2
+  {Calls moveTail with correct value (Call:FacingTarget,Fcng:Any)}
+  wenn isTail dann
+    wenn IstZiegel(1) dann
+      moveTail(1)
+    sonst
+      wenn IstZiegel(2) dann
+        moveTail(2)
+      sonst
+        wenn IstZiegel(3) dann
+          moveTail(3)
+        sonst
+          wenn IstZiegel(4) dann
+            moveTail(4)
+          *wenn
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+*Anweisung
+
+Anweisung gameover
+  langsam
+  Warten(1000)
+  wiederhole solange nicht isHead
+    schnell
+    wiederhole solange nicht IstWesten
+      LinksDrehen
+    *wiederhole
+    sbw
+    LinksDrehen
+    sbw
+    LinksDrehen
+    findTail
+    moveSegment2
+    langsam
+    Warten(60)
+  *wiederhole
+  Beenden //add
+*Anweisung
+
+Anweisung moveHead
+  {Moves the head of the snake in the correct direction, adds
+   corner if the snake is turning}
+  Schritt
+  wiederhole solange nicht IstWesten
+    LinksDrehen
+  *wiederhole
+  wiederhole x mal
+    RechtsDrehen
+  *wiederhole
+  wenn nicht IstZiegel(10) dann
+    wenn canMoveHead dann
+      Hinlegen(X)
+    sonst
+      gameover
+    *wenn
+  sonst
+    //Ton//<----------------------------------------------------------------------[Einstellung] Ton, wenn ein Punkt gesammelt wurde
+    Aufheben(10)
+    wiederhole solange nicht IstWesten
+      LinksDrehen
+    *wiederhole
+    sbw
+    LinksDrehen
+    sbw
+    LinksDrehen
+    Schritt(15)
+    RechtsDrehen
+    Hinlegen(2)//<--------------------------------------------------------------[Einstellung] Um wie viel die Schlange bei einem Punkt wächst (Nicht größer als 9)
+    Schritt(2)
+    LinksDrehen
+    Schritt(14)
+    newPoint
+    //RechtsDrehen
+    //Schritt(15)
+    //umdrehen
+    findHead
+    Schritt
+    wiederhole solange nicht IstWesten
+      LinksDrehen
+    *wiederhole
+    wiederhole x mal
+      RechtsDrehen
+    *wiederhole
+    Hinlegen(X)
+  *wenn
+  wenn IstMarke dann
+    Schritt
+    umdrehen
+    Aufheben(4)
+  sonst
+    Schritt
+    umdrehen
+    Aufheben(X)
+    Schritt
+    MarkeSetzen
+  *wenn
+*Anweisung
+
+Anweisung moveSegment
+  {Calls the moveHead or moveTail function with the correct direction
+   indicators (Call:FacingTarget,Fcng:Any)}
+  wenn isHead dann
+    wenn IstZiegel(5) dann
+      moveHead(5)
+    sonst
+      wenn IstZiegel(6) dann
+        moveHead(6)
+      sonst
+        wenn IstZiegel(7) dann
+          moveHead(7)
+        sonst
+          wenn IstZiegel(8) dann
+            moveHead(8)
+          *wenn
+        *wenn
+      *wenn
+    *wenn
+  sonst
+    wenn isTail dann
+      wenn IstZiegel(1) dann
+        moveTail(1)
+      sonst
+        wenn IstZiegel(2) dann
+          moveTail(2)
+        sonst
+          wenn IstZiegel(3) dann
+            moveTail(3)
+          sonst
+            wenn IstZiegel(4) dann
+              moveTail(4)
+            *wenn
+          *wenn
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+*Anweisung
+
+Anweisung moveSnake
+  {Moves the snake by 1. Calls gameover if next move
+   is invalid}
+  Schritt
+  umdrehen
+  wenn IstZiegel(1) dann
+    Schritt(2)
+    LinksDrehen
+    Schritt(15)
+    umdrehen
+    findTail
+    moveSegment
+    wiederhole solange nicht IstWesten
+      LinksDrehen
+    *wiederhole
+    sbw
+    LinksDrehen
+    sbw
+    LinksDrehen
+  sonst
+    LinksDrehen
+    wiederhole solange nicht isBrickOrWall
+      Schritt
+    *wiederhole
+    wenn IstZiegel(10) dann
+      umdrehen
+      Schritt
+      umdrehen
+    *wenn
+    wenn IstWand dann
+      umdrehen
+      Schritt
+      umdrehen
+    *wenn
+    Hinlegen
+    umdrehen
+    wiederhole solange nicht IstMarke
+      Schritt
+    *wiederhole
+    LinksDrehen
+    Aufheben
+    Schritt(2)
+    LinksDrehen
+    Schritt(15)
+    umdrehen
+  *wenn
+  findHead
+  moveSegment
+  wiederhole solange nicht IstWesten
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  Schritt(15)
+  RechtsDrehen
+  Schritt
+*Anweisung
+
+//Giving arguments to conditions apparently doesn't work,
+//so every direction now has it's own dedicated function
+
+Anweisung changeDirectionU
+  {Changes the Head of the Snake to 5 (Up), and
+   puts a marker on top}
+  wiederhole solange nicht IstSüden
+    LinksDrehen
+  *wiederhole
+  sbw
+  umdrehen
+  Schritt(2)
+  LinksDrehen
+  Schritt(14)
+  wenn isHead dann
+    wenn nicht IstZiegel(5) dann
+      wenn nicht IstZiegel(7) dann
+        wenn nicht isMarkerAhead dann
+          wiederhole solange IstZiegel
+            Aufheben
+          *wiederhole
+          Hinlegen(5)
+          Schritt
+          MarkeSetzen
+        *wenn
+      *wenn
+    *wenn
+  sonst
+    Schritt
+    umdrehen
+    findHead
+    wenn nicht IstZiegel(5) dann
+      wenn nicht IstZiegel(7) dann
+        wenn nicht isMarkerAhead dann
+          wiederhole solange IstZiegel
+            Aufheben
+          *wiederhole
+          Hinlegen(5)
+          Schritt
+          MarkeSetzen
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+  wiederhole solange nicht IstWesten
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  Schritt(15)
+  RechtsDrehen
+  Schritt
+*Anweisung
+
+Anweisung changeDirectionR
+  {Changes the Head of the Snake to 6 (Right), and
+   puts a marker on top}
+  wiederhole solange nicht IstSüden
+    LinksDrehen
+  *wiederhole
+  sbw
+  umdrehen
+  Schritt(2)
+  LinksDrehen
+  Schritt(14)
+  wenn isHead dann
+    wenn nicht IstZiegel(6) dann
+      wenn nicht IstZiegel(8) dann
+        wenn nicht isMarkerAhead dann
+          wiederhole solange IstZiegel
+            Aufheben
+          *wiederhole
+          Hinlegen(6)
+          Schritt
+          MarkeSetzen
+        *wenn
+      *wenn
+    *wenn
+  sonst
+    Schritt
+    umdrehen
+    findHead
+    wenn nicht IstZiegel(6) dann
+      wenn nicht IstZiegel(8) dann
+        wenn nicht isMarkerAhead dann
+          wiederhole solange IstZiegel
+            Aufheben
+          *wiederhole
+          Hinlegen(6)
+          Schritt
+          MarkeSetzen
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+  wiederhole solange nicht IstWesten
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  Schritt(15)
+  RechtsDrehen
+  Schritt
+*Anweisung
+
+Anweisung changeDirectionD
+  {Changes the Head of the Snake to 7 (Down), and
+   puts a marker on top}
+  wiederhole solange nicht IstSüden
+    LinksDrehen
+  *wiederhole
+  sbw
+  umdrehen
+  Schritt(2)
+  LinksDrehen
+  Schritt(14)
+  wenn isHead dann
+    wenn nicht IstZiegel(7) dann
+      wenn nicht IstZiegel(5) dann
+        wenn nicht isMarkerAhead dann
+          wiederhole solange IstZiegel
+            Aufheben
+          *wiederhole
+          Hinlegen(7)
+          Schritt
+          MarkeSetzen
+        *wenn
+      *wenn
+    *wenn
+  sonst
+    Schritt
+    umdrehen
+    findHead
+    wenn nicht IstZiegel(7) dann
+      wenn nicht IstZiegel(5) dann
+        wenn nicht isMarkerAhead dann
+          wiederhole solange IstZiegel
+            Aufheben
+          *wiederhole
+          Hinlegen(7)
+          Schritt
+          MarkeSetzen
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+  wiederhole solange nicht IstWesten
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  Schritt(15)
+  RechtsDrehen
+  Schritt
+*Anweisung
+
+Anweisung changeDirectionL
+  {Changes the Head of the Snake to 8 (Left), and
+   puts a marker on top}
+  wiederhole solange nicht IstSüden
+    LinksDrehen
+  *wiederhole
+  sbw
+  umdrehen
+  Schritt(2)
+  LinksDrehen
+  Schritt(14)
+  wenn isHead dann
+    wenn nicht IstZiegel(8) dann
+      wenn nicht IstZiegel(6) dann
+        wenn nicht isMarkerAhead dann
+          wiederhole solange IstZiegel
+            Aufheben
+          *wiederhole
+          Hinlegen(8)
+          Schritt
+          MarkeSetzen
+        *wenn
+      *wenn
+    *wenn
+  sonst
+    Schritt
+    umdrehen
+    findHead
+    wenn nicht IstZiegel(8) dann
+      wenn nicht IstZiegel(6) dann
+        wenn nicht isMarkerAhead dann
+          wiederhole solange IstZiegel
+            Aufheben
+          *wiederhole
+          Hinlegen(8)
+          Schritt
+          MarkeSetzen
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+  wiederhole solange nicht IstWesten
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  Schritt(15)
+  RechtsDrehen
+  Schritt
+*Anweisung
+
+
+Anweisung inputCheck
+  {Checks if the User has pressed a button, and calls the changeDirection
+  function if they did}
+  wiederhole 2100 mal //<-------------------------------------------------------[Anpassen] Geschwindigkeit der Schlange(niedriger ist schneller)
+    //warten(300)
+    wenn IstOsten dann //left
+      Schnell
+      changeDirectionL
+      Langsam
+    *wenn
+    wenn IstWesten dann //right
+      Schnell
+      changeDirectionR
+      Langsam
+    *wenn
+    wenn IstZiegel dann //down
+      Schnell
+      changeDirectionD
+      Langsam
+    *wenn
+    wenn IstMarke dann //up
+      Schnell
+      wenn nicht IstZiegel(1) dann
+        changeDirectionU
+      *wenn
+      Langsam
+    *wenn
+  *wiederhole
+*Anweisung
+
+
+Schnell
+wiederhole solange nicht IstOsten
+  LinksDrehen
+*wiederhole
+sbw
+LinksDrehen
+sbw
+LinksDrehen
+wiederhole solange nicht IstWand
+  RechtsDrehen
+  wenn IstZiegel dann
+    sbw
+  *wenn
+  LinksDrehen
+  Schritt
+*wiederhole
+LinksDrehen
+Langsam
+
+Schnell
+sbw
+LinksDrehen
+Schritt(15)
+RechtsDrehen
+Schritt(2)
+LinksDrehen
+Schritt(14)
+newPoint
+Schritt(15)
+RechtsDrehen
+Schritt
+Langsam
+wiederhole immer
+  inputCheck
+  Schnell
+  moveSnake
+  Langsam
+*wiederhole
+
+
+
+
+
+
+
+
+
+
+
+
+
+
