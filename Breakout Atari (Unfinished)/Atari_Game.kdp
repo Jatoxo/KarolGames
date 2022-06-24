@@ -1,0 +1,705 @@
+//B:15, L:16
+
+//gameover screen
+//winning screen
+
+
+
+
+Einfügen
+anweisungen
+*Einfügen
+
+Bedingung istVorneMarke
+  falsch
+  Schnell
+  wenn NichtIstWand dann
+    Schritt
+    wenn IstMarke dann
+      wahr
+    *wenn
+    umdrehen
+    Schritt
+    umdrehen
+  *wenn
+*Bedingung
+
+Bedingung istWandOderMarke
+  falsch
+  Schnell
+  wenn IstWand dann
+    wahr
+  *wenn
+  wenn NichtIstWand dann
+    Schnell
+    Schritt
+    wenn IstMarke dann
+      wahr
+    *wenn
+    umdrehen
+    Schritt
+    umdrehen
+    Langsam
+  *wenn
+*Bedingung
+
+Bedingung istWandOderZiegel
+  falsch
+  wenn IstWand dann
+    wahr
+  *wenn
+  wenn IstZiegel dann
+    wahr
+  *wenn
+*Bedingung
+
+Bedingung istUmgebungWandOderMarkeOderZiegel
+  falsch
+  Schnell
+  RechtsDrehen
+  wenn istVornemarke dann
+    wahr
+  sonst
+    wenn IstWand dann
+      wahr
+    sonst
+      wenn IstZiegel dann
+        wahr
+      sonst
+        Schritt
+        LinksDrehen
+        wenn istVornemarke dann
+          wahr
+        sonst
+          wenn IstWand dann
+            wahr
+          sonst
+            wenn IstZiegel dann
+              wahr
+            sonst
+              Schritt
+              wenn istVorneMarke dann
+                wahr
+              sonst
+                wenn IstWand dann
+                  wahr
+                sonst
+                  wenn IstZiegel dann
+                    wahr
+                  sonst
+                    Schritt
+                    LinksDrehen
+                    wenn istvornemarke dann
+                      wahr
+                    sonst
+                      wenn IstWand dann
+                        wahr
+                      sonst
+                        wenn IstZiegel dann
+                          wahr
+                        sonst
+                          Schritt
+                          wenn istvornemarke dann
+                            wahr
+                          sonst
+                            wenn IstWand dann
+                              wahr
+                            sonst
+                              wenn IstZiegel dann
+                                wahr
+                              sonst
+                                Schritt
+                                LinksDrehen
+                                wenn istvornemarke dann
+                                  wahr
+                                sonst
+                                  wenn IstWand dann
+                                    wahr
+                                  sonst
+                                    wenn IstZiegel dann
+                                      wahr
+                                    sonst
+                                      Schritt
+                                      wenn istvornemarke dann
+                                        wahr
+                                      sonst
+                                        wenn IstWand dann
+                                          wahr
+                                        sonst
+                                          wenn IstZiegel dann
+                                            wahr
+                                          sonst
+                                            Schritt
+                                            LinksDrehen
+                                            wenn istvornemarke dann
+                                              wahr
+                                            sonst
+                                              wenn IstWand dann
+                                                wahr
+                                              sonst
+                                                wenn IstZiegel dann
+                                                  wahr
+                                                sonst
+                                                  Schritt
+                                                  LinksDrehen
+                                                *wenn
+                                              *wenn
+                                            *wenn
+                                          *wenn
+                                        *wenn
+                                      *wenn
+                                    *wenn
+                                  *wenn
+                                *wenn
+                              *wenn
+                            *wenn
+                          *wenn
+                        *wenn
+                      *wenn
+                    *wenn
+                  *wenn
+                *wenn
+              *wenn
+            *wenn
+          *wenn
+        *wenn
+      *wenn
+    *wenn
+  *wenn
+  Langsam
+*Bedingung
+
+Anweisung zustart
+  wiederhole solange nicht IstWesten
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  Schritt(6)
+*Anweisung
+
+Anweisung eingabekontrollec
+  wenn IstMarke dann  //LINKS
+    Schnell
+    MarkeLöschen
+    umdrehen
+    sbw
+    RechtsDrehen
+    wenn IstZiegel dann
+      RechtsDrehen
+      Schritt(6)
+    sonst
+      Schritt
+      RechtsDrehen
+      wiederhole solange NichtIstZiegel
+        Schritt
+      *wiederhole
+      Schritt(2)
+      Aufheben
+      umdrehen
+      Schritt
+      Hinlegen
+      sbw
+      LinksDrehen
+      Schritt
+      LinksDrehen
+      Schritt(6)
+    *wenn
+    Langsam
+  *wenn
+  Schritt
+  mmarkelöschen
+  Schritt
+  wenn IstMarke dann  //RECHTS
+    Schnell
+    MarkeLöschen
+    sbw
+    LinksDrehen
+    wenn IstZiegel dann
+      LinksDrehen
+      Schritt(6)
+      umdrehen
+    sonst
+      Schritt
+      LinksDrehen
+      wiederhole solange NichtIstZiegel
+        Schritt
+      *wiederhole
+      Schritt(2)
+      Aufheben
+      umdrehen
+      Schritt
+      Hinlegen
+      sbw
+      RechtsDrehen
+      Schritt
+      RechtsDrehen
+      Schritt(6)
+      umdrehen
+    *wenn
+    Langsam
+  *wenn
+  umdrehen
+  Schritt(2)
+  umdrehen
+*Anweisung
+
+Anweisung eingabekontrolleStart
+  wenn IstMarke dann  //LINKS
+    MarkeLöschen
+    umdrehen
+    sbw
+    RechtsDrehen
+    wenn IstZiegel dann
+      RechtsDrehen
+      Schritt(6)
+    sonst
+      Schritt
+      RechtsDrehen
+      wiederhole solange NichtIstZiegel
+        Schritt
+      *wiederhole
+      Schritt(2)
+      Aufheben
+      LinksDrehen
+      wenn IstZiegel dann
+        Aufheben
+        Schritt
+        LinksDrehen
+        Hinlegen
+        Schritt
+      sonst
+        Schritt
+        LinksDrehen
+        Schritt
+      *wenn
+      Schritt
+      LinksDrehen
+      Hinlegen
+      Schritt(2)
+      RechtsDrehen
+      sbw
+      umdrehen
+      Schritt(6)
+    *wenn
+  *wenn
+  Schritt
+  wenn IstMarke dann
+    MarkeLöschen
+    RechtsDrehen
+  *wenn
+  wenn NichtIstWand dann
+    Schritt
+    wenn IstMarke dann  //RECHTS
+      MarkeLöschen
+      sbw
+      LinksDrehen
+      wenn IstZiegel dann
+        LinksDrehen
+        Schritt(6)
+        umdrehen
+      sonst
+        Schritt
+        LinksDrehen
+        wiederhole solange NichtIstZiegel
+          Schritt
+        *wiederhole
+        Schritt(2)
+        Aufheben
+        RechtsDrehen
+        wenn IstZiegel dann
+          Aufheben
+          Schritt
+          RechtsDrehen
+          Hinlegen
+          Schritt
+        sonst
+          Schritt
+          RechtsDrehen
+          Schritt
+        *wenn
+        Schritt
+        RechtsDrehen
+        Hinlegen
+        Schritt(2)
+        LinksDrehen
+        sbw
+        umdrehen
+        Schritt(6)
+        umdrehen
+      *wenn
+    *wenn
+  *wenn
+  wenn NichtIstWand dann
+    umdrehen
+    Schritt(2)
+    umdrehen
+  *wenn
+*Anweisung
+
+Anweisung eingabekontrolle
+  wiederhole 500 mal  //300                                 //[Änderung] Geschwindigkeit der Schüsse (Je größer der Wert, desto langsamer die Schüsse)
+    eingabekontrollec
+  *wiederhole
+*Anweisung
+
+Anweisung delayShort
+  wiederhole 20000 mal  //20000                             //[Änderung] Dieser Wert sollte proportional zu dem Oberem sein, d.h., wird der Obere halbiert, sollte dieser auch halbiert werden.
+    wenn IstWand dann
+    *wenn
+  *wiederhole
+*Anweisung
+
+Anweisung mitte
+  wiederhole solange nicht istwandodermarke
+    Schnell
+    umdrehen
+    Schritt
+    umdrehen
+    Aufheben
+    Schritt
+    Hinlegen
+    zustart
+    Langsam
+    eingabekontrolle
+    Schnell
+    umdrehen
+    sbw
+    RechtsDrehen
+    Schritt(2)
+    RechtsDrehen
+    wiederhole solange NichtIstZiegel
+      wenn NichtIstWand dann
+        Schritt
+      sonst
+        wenn IstOsten dann
+          LinksDrehen
+          Schritt
+          LinksDrehen
+        sonst
+          RechtsDrehen
+          Schritt
+          RechtsDrehen
+        *wenn
+      *wenn
+    *wiederhole
+    Schritt
+    wenn IstWesten dann
+      RechtsDrehen
+    sonst
+      LinksDrehen
+    *wenn
+    Langsam
+  *wiederhole
+  Schnell
+  wenn NichtIstWand dann
+    Schritt
+    MarkeLöschen
+    umdrehen
+    Schritt
+  sonst
+    umdrehen
+  *wenn
+  wiederhole solange nicht istwandoderziegel //unten
+    umdrehen
+    wenn IstWand dann
+      umdrehen
+      Schritt
+      umdrehen
+      Aufheben
+      Schritt
+      umdrehen
+      Hinlegen
+      Schritt
+    sonst
+      Schritt
+      umdrehen
+      Aufheben
+      Schritt
+      Hinlegen
+      Schritt
+    *wenn
+    LinksDrehen
+    wenn IstZiegel dann
+      RechtsDrehen
+      Langsam
+      delayshort
+      Schnell
+      umdrehen
+      Schritt
+      umdrehen
+      Aufheben
+      Schritt
+      wenn istwandodermarke dann
+        Schritt
+        MarkeLöschen
+        umdrehen
+        Schritt
+        umdrehen
+      *wenn
+      Hinlegen
+      Schritt
+      Langsam
+      delayshort
+      ziegellöschen
+      markenlöschen
+      error  //gameover
+    *wenn
+    umdrehen
+    wenn IstZiegel dann
+      LinksDrehen
+      Langsam
+      delayshort
+      Schnell
+      umdrehen
+      Schritt
+      umdrehen
+      Aufheben
+      Schritt
+      wenn istwandodermarke dann
+        Schritt
+        MarkeLöschen
+        umdrehen
+        Schritt
+        umdrehen
+      *wenn
+      Hinlegen
+      Schritt
+      Langsam
+      delayshort
+      ziegellöschen
+      markenlöschen
+      error  //gameover
+    *wenn
+    zustart
+    Langsam
+    eingabekontrolle
+    Schnell
+    umdrehen
+    sbw
+    RechtsDrehen
+    Schritt(2)
+    RechtsDrehen
+    wiederhole solange NichtIstZiegel
+      wenn NichtIstWand dann
+        Schritt
+      sonst
+        wenn IstOsten dann
+          LinksDrehen
+          Schritt
+          LinksDrehen
+        sonst
+          RechtsDrehen
+          wenn IstWand dann
+            umdrehen
+            sbw
+            umdrehen
+            Schritt
+            RechtsDrehen
+            wiederhole solange NichtIstZiegel
+              Schritt
+            *wiederhole
+            Schritt
+            wenn IstZiegel dann
+              Schritt(2)
+              wiederhole solange NichtIstZiegel
+                Schritt
+              *wiederhole
+              Schritt
+              RechtsDrehen
+              delayshort
+              Schnell
+              umdrehen
+              Schritt
+              umdrehen
+              Aufheben
+              Schritt
+              Hinlegen
+              Schritt
+              mmarkelöschen
+              Langsam
+              delayshort
+              ziegellöschen
+              markenlöschen
+              error  //gameover
+            *wenn
+            RechtsDrehen
+            delayshort
+            Schnell
+            umdrehen
+            Schritt
+            umdrehen
+            Aufheben
+            Schritt
+            Hinlegen
+            Schritt
+            mmarkelöschen
+            Langsam
+            delayshort
+            ziegellöschen
+            markenlöschen
+            error //gameover
+          *wenn
+          Schritt
+          RechtsDrehen
+        *wenn
+      *wenn
+    *wiederhole
+    Schritt
+    wenn IstWesten dann
+      LinksDrehen
+    sonst
+      RechtsDrehen
+    *wenn
+  *wiederhole
+  RechtsDrehen
+  sbw
+  LinksDrehen
+  Schritt
+  LinksDrehen
+  wiederhole solange NichtIstZiegel
+    Schritt
+  *wiederhole
+  Schnell
+  Schritt
+  umdrehen
+  wenn NichtIstZiegel dann
+    umdrehen
+    Schritt
+    LinksDrehen
+  sonst
+    RechtsDrehen
+  *wenn
+  Langsam
+*Anweisung
+
+Anweisung links
+
+*Anweisung
+
+Anweisung rechts
+
+*Anweisung
+
+
+wiederhole solange nicht IstSüden
+  LinksDrehen
+*wiederhole
+wiederhole solange NichtIstWand
+  aaufheben
+  Schritt
+*wiederhole
+LinksDrehen
+wiederhole solange NichtIstWand
+  aaufheben
+  Schritt
+*wiederhole
+LinksDrehen
+wiederhole 15 mal  //Überprüfen der Weltgröße
+  wenn IstWand dann
+    error
+  *wenn
+  aaufheben
+  Schritt
+*wiederhole
+wenn NichtIstWand dann
+  error
+*wenn
+LinksDrehen
+wiederhole 14 mal
+  wenn IstWand dann
+    error
+  *wenn
+  aaufheben
+  Schritt
+*wiederhole
+wenn NichtIstWand dann
+  error
+*wenn  //Ende von Überprüfen der Weltgröße
+ziegellöschen
+markenlöschen
+Schritt  //Start von Aufbau
+LinksDrehen
+wiederhole 4 mal
+  wiederhole solange NichtIstWand
+    MarkeSetzen
+    Schritt
+  *wiederhole
+  MarkeSetzen
+  wenn IstOsten dann
+    RechtsDrehen
+    Schritt
+    RechtsDrehen
+  sonst
+    LinksDrehen
+    Schritt
+    LinksDrehen
+  *wenn
+*wiederhole
+RechtsDrehen
+sbw
+LinksDrehen
+Schritt(5)
+MarkeSetzen
+Schritt(4)
+MarkeSetzen
+LinksDrehen
+Schritt
+LinksDrehen
+wiederhole 2 mal
+  Hinlegen
+  Schritt
+*wiederhole
+RechtsDrehen
+Hinlegen
+LinksDrehen
+Hinlegen
+Schritt
+LinksDrehen
+Schritt
+LinksDrehen
+
+wiederhole solange NichtIstWand
+  eingabekontrolleStart
+*wiederhole
+RechtsDrehen
+sbw
+RechtsDrehen
+Schritt(2)
+RechtsDrehen
+wiederhole solange NichtIstZiegel
+  Schritt
+*wiederhole
+Schritt
+LinksDrehen
+mitte
+LinksDrehen
+Schritt
+umdrehen
+wiederhole immer
+  LinksDrehen
+  wenn IstZiegel dann  //Links
+    links
+  *wenn
+  RechtsDrehen
+  Schritt
+  LinksDrehen
+  wenn IstZiegel dann //Mitte
+    Schritt
+    Mitte
+  *wenn
+  RechtsDrehen
+  Schritt
+  LinksDrehen
+  wenn IstZiegel dann  //Rechts
+    rechts
+  *wenn
+  LinksDrehen
+  Schritt(2)
+  umdrehen
+*wiederhole
+
+
+

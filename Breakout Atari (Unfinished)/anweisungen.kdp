@@ -1,0 +1,235 @@
+Anweisung umdrehen
+  LinksDrehen
+  LinksDrehen
+*Anweisung
+
+Anweisung sbw
+  wiederhole solange NichtIstWand
+    Schritt
+  *wiederhole
+*Anweisung
+
+Anweisung aaufheben
+  wiederhole solange IstZiegel
+    Aufheben
+  *wiederhole
+*Anweisung
+
+Anweisung hhinlegen
+  wenn NichtIstZiegel dann
+    Hinlegen
+  *wenn
+*Anweisung
+
+Anweisung mmarkesetzen
+  wenn NichtIstMarke dann
+    MarkeSetzen
+  *wenn
+*Anweisung
+
+Anweisung mmarkelöschen
+  wenn IstMarke dann
+    MarkeLöschen
+  *wenn
+*Anweisung
+
+Anweisung error
+  wiederhole solange nicht IstNorden
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  wenn IstWand dann
+    LinksDrehen
+    wenn IstWand dann
+      RechtsDrehen
+      MarkeSetzen
+      Beenden
+    *wenn
+  *wenn
+  wiederhole 4 mal
+    wiederhole solange NichtIstWand
+      Schritt
+      mmarkesetzen
+    *wiederhole
+    LinksDrehen
+  *wiederhole
+  wenn IstOsten dann
+    RechtsDrehen
+  *wenn
+  Beenden
+*Anweisung
+
+Anweisung markenlöschen
+  wiederhole solange nicht IstNorden
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+  wiederhole solange NichtIstWand
+    wiederhole solange NichtIstWand
+      mmarkelöschen
+      Schritt
+    *wiederhole
+    mmarkelöschen
+    wenn IstNorden dann
+      RechtsDrehen
+    sonst
+      LinksDrehen
+    *wenn
+    wenn NichtIstWand dann
+      Schritt
+      RechtsDrehen
+      wenn IstWand dann
+        umdrehen
+      *wenn
+    *wenn
+  *wiederhole
+  LinksDrehen
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+*Anweisung
+
+Anweisung ziegellöschen
+  wiederhole solange nicht IstNorden
+    LinksDrehen
+  *wiederhole
+  wiederhole solange NichtIstWand
+    aaufheben
+    Schritt
+  *wiederhole
+  linksdrehen
+  wiederhole solange NichtIstWand
+    aaufheben
+    Schritt
+  *wiederhole
+  LinksDrehen
+  aaufheben
+  Schritt
+  umdrehen
+  aaufheben
+  Schritt
+  umdrehen
+  wiederhole solange NichtIstWand
+    wiederhole solange NichtIstWand
+      aaufheben
+      Schritt
+    *wiederhole
+    wenn IstNorden dann
+      RechtsDrehen
+    sonst
+      LinksDrehen
+    *wenn
+    wenn NichtIstWand dann
+      aaufheben
+      Schritt
+      RechtsDrehen
+      wenn IstWand dann
+        umdrehen
+      *wenn
+    *wenn
+  *wiederhole
+  LinksDrehen
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+*Anweisung
+
+Anweisung markenlöschenbis
+  wiederhole solange nicht IstNorden
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  umdrehen
+  wiederhole x mal
+    wiederhole solange NichtIstWand
+      mmarkelöschen
+      Schritt
+    *wiederhole
+    mmarkelöschen
+    wenn IstOsten dann
+      RechtsDrehen
+      wenn IstWand dann
+        error
+      *wenn
+      Schritt
+      RechtsDrehen
+    sonst
+      LinksDrehen
+      wenn IstWand dann
+        error
+      *wenn
+      Schritt
+      LinksDrehen
+    *wenn
+  *wiederhole
+  wiederhole solange nicht IstNorden
+    LinksDrehen
+  *wiederhole
+  sbw
+  LinksDrehen
+  sbw
+  LinksDrehen
+*Anweisung
+
+Bedingung istVorneMarke
+  falsch
+  Schnell
+  wenn NichtIstWand dann
+    Schritt
+    wenn IstMarke dann
+      wahr
+    *wenn
+    umdrehen
+    Schritt
+    umdrehen
+  *wenn
+  Langsam
+*Bedingung
+
+Bedingung istWandBei
+  {
+  Überprüft, ob in Blickrichtung auf der xten Stelle vor Karol istWand als wahr
+  ausgegeben wird, und kehrt zur Startpos. zurück, außer er trifft vor der zu überprüfenden
+  Stelle auf eine Wand, dann bleibt er davor stehen und es wird ein falsch aus-
+  gegeben
+  }
+  wahr
+  Schnell
+  wiederhole x mal
+    wenn IstWand dann
+      falsch
+      mmarkesetzen
+    sonst
+      Schritt
+    *wenn
+  *wiederhole
+  wenn NichtIstWand dann
+    falsch
+  *wenn
+  wenn IstMarke dann
+    MarkeLöschen
+  sonst
+    umdrehen
+    wiederhole x mal
+      Schritt
+    *wiederhole
+    umdrehen
+  *wenn
+  Langsam
+*Bedingung
+
+
+
+
+
+
